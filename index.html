@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Sistem Peminjaman Barang</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .login-role {
+            margin-bottom: 14px;
+        }
+
+        .login-role > label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .role-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 7px;
+        }
+
+        .role-option {
+            position: relative;
+        }
+
+        .role-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .role-option label {
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid #ddd;
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 10px;
+            font-weight: 500;
+
+            background: #fff;
+            color: #555;
+
+            transition: 0.2s;
+        }
+
+        .role-option label:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .role-option input:checked + label {
+            background: #2563eb;
+            color: #fff;
+            border-color: #2563eb;
+        }
+
+        .login-info {
+            margin-top: 15px;
+            padding: 9px;
+
+            background: #f5f7fa;
+            border-radius: 6px;
+
+            font-size: 10px;
+            line-height: 1.6;
+
+            color: #666;
+            text-align: center;
+        }
+
+        .login-info strong {
+            color: #2563eb;
+        }
+
+        @media (max-width: 450px) {
+            .role-options {
+                grid-template-columns: 1fr;
+            }
+
+            .role-option label {
+                height: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body class="login-page">
+
+    <div class="login-container">
+
+        <div class="login-box">
+
+            <!-- Logo -->
+            <div class="login-icon">
+                PB
+            </div>
+
+            <!-- Judul -->
+            <h1>Sistem Peminjaman Barang</h1>
+
+            <p>Silakan masuk ke dalam sistem</p>
+
+            <!-- Form Login -->
+            <form onsubmit="login(event)">
+
+                <!-- Pilihan Pengguna -->
+                <div class="login-role">
+
+                    <label>Pilih Pengguna</label>
+
+                    <div class="role-options">
+
+                        <!-- ADMIN -->
+                        <div class="role-option">
+
+                            <input
+                                type="radio"
+                                name="role"
+                                id="roleAdmin"
+                                value="admin"
+                                checked
+                                onchange="ubahInfoLogin()"
+                            >
+
+                            <label for="roleAdmin">
+                                Admin
+                            </label>
+
+                        </div>
+
+
+                        <!-- SISWA -->
+                        <div class="role-option">
+
+                            <input
+                                type="radio"
+                                name="role"
+                                id="roleSiswa"
+                                value="siswa"
+                                onchange="ubahInfoLogin()"
+                            >
+
+                            <label for="roleSiswa">
+                                Siswa
+                            </label>
+
+                        </div>
+
+
+                        <!-- PETUGAS -->
+                        <div class="role-option">
+
+                            <input
+                                type="radio"
+                                name="role"
+                                id="rolePetugas"
+                                value="petugas"
+                                onchange="ubahInfoLogin()"
+                            >
+
+                            <label for="rolePetugas">
+                                Petugas
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Username -->
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Masukkan username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Masukkan password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Tombol Login -->
+                <button
+                    type="submit"
+                    class="btn-primary login-btn"
+                >
+                    Login
+                </button>
+
+            </form>
+
+
+            <!-- Informasi Login -->
+            <div
+                class="login-info"
+                id="loginInfo"
+            >
+
+                <strong>Login Admin</strong>
+                <br>
+
+                Username: admin
+                <br>
+
+                Password: admin123
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // ==========================================
+        // MENGUBAH INFORMASI SESUAI PILIHAN PENGGUNA
+        // ==========================================
+
+        function ubahInfoLogin() {
+
+            const role =
+                document.querySelector(
+                    'input[name="role"]:checked'
+                ).value;
+
+            const info =
+                document.getElementById("loginInfo");
+
+
+            // ADMIN
+            if (role === "admin") {
+
+                info.innerHTML = `
+                    <strong>Login Admin</strong><br>
+                    Username: admin<br>
+                    Password: admin123
+                `;
+
+            }
+
+
+            // SISWA
+            else if (role === "siswa") {
+
+                info.innerHTML = `
+                    <strong>Login Siswa</strong><br>
+                    Username: siswa<br>
+                    Password: siswa123
+                `;
+
+            }
+
+
+            // PETUGAS
+            else if (role === "petugas") {
+
+                info.innerHTML = `
+                    <strong>Login Petugas</strong><br>
+                    Username: petugas<br>
+                    Password: petugas123
+                `;
+
+            }
+
+        }
+
+
+        // ==========================================
+        // PROSES LOGIN
+        // ==========================================
+
+        function login(event) {
+
+            event.preventDefault();
+
+
+            // Mengambil role
+            const role =
+                document.querySelector(
+                    'input[name="role"]:checked'
+                ).value;
+
+
+            // Mengambil username
+            const username =
+                document.getElementById("username")
+                .value
+                .trim();
+
+
+            // Mengambil password
+            const password =
+                document.getElementById("password")
+                .value;
+
+
+            // ==========================================
+            // LOGIN ADMIN
+            // ==========================================
+
+            if (
+                role === "admin" &&
+                username === "admin" &&
+                password === "admin123"
+            ) {
+
+                localStorage.setItem(
+                    "loginRole",
+                    "admin"
+                );
+
+                localStorage.setItem(
+                    "loginUsername",
+                    username
+                );
+
+                window.location.href =
+                    "dashboard.html";
+
+                return;
+            }
+
+
+            // ==========================================
+            // LOGIN SISWA
+            // ==========================================
+
+            if (
+                role === "siswa" &&
+                username === "siswa" &&
+                password === "siswa123"
+            ) {
+
+                localStorage.setItem(
+                    "loginRole",
+                    "siswa"
+                );
+
+                localStorage.setItem(
+                    "loginUsername",
+                    username
+                );
+
+                window.location.href =
+                    "siswa.html";
+
+                return;
+            }
+
+
+            // ==========================================
+            // LOGIN PETUGAS
+            // ==========================================
+
+            if (
+                role === "petugas" &&
+                username === "petugas" &&
+                password === "petugas123"
+            ) {
+
+                localStorage.setItem(
+                    "loginRole",
+                    "petugas"
+                );
+
+                localStorage.setItem(
+                    "loginUsername",
+                    username
+                );
+
+                window.location.href =
+                    "petugas.html";
+
+                return;
+            }
+
+
+            // ==========================================
+            // LOGIN GAGAL
+            // ==========================================
+
+            alert(
+                "Username atau password salah."
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>

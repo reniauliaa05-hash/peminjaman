@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Konfirmasi Peminjaman</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-menunggu {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-disetujui {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-ditolak {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-dipinjam {
+            background: #cfe2ff;
+            color: #084298;
+        }
+
+        .status-dikembalikan {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+
+        /* =========================
+           NOTIFIKASI
+        ========================= */
+
+        .notifikasi {
+            margin-bottom: 20px;
+            padding: 12px 15px;
+
+            background: #e8f1ff;
+            color: #174ea6;
+
+            border-left: 4px solid #2563eb;
+            border-radius: 6px;
+        }
+
+
+        /* =========================
+           TOMBOL AKSI
+        ========================= */
+
+        .btn-detail,
+        .btn-setujui,
+        .btn-tolak {
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 2px;
+            color: white;
+        }
+
+        .btn-detail {
+            background: #6c757d;
+        }
+
+        .btn-setujui {
+            background: #198754;
+        }
+
+        .btn-tolak {
+            background: #dc3545;
+        }
+
+        .btn-detail:hover,
+        .btn-setujui:hover,
+        .btn-tolak:hover {
+            opacity: 0.85;
+        }
+
+
+        /* =========================
+           DATA KOSONG
+        ========================= */
+
+        .kosong {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+
+        /* =========================
+           MODAL DETAIL
+        ========================= */
+
+        .modal-detail {
+            display: none;
+
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.5);
+
+            align-items: center;
+            justify-content: center;
+
+            z-index: 999;
+        }
+
+
+        .modal-detail-content {
+            width: 90%;
+            max-width: 500px;
+
+            background: white;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+
+        .modal-detail-header {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+
+        .modal-detail-header h2 {
+            margin: 0;
+        }
+
+
+        .close-detail {
+            border: none;
+
+            background: none;
+
+            font-size: 25px;
+
+            cursor: pointer;
+
+            color: #555;
+        }
+
+
+        .detail-list {
+            margin: 0;
+        }
+
+
+        .detail-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 9px 0;
+
+            border-bottom: 1px solid #eee;
+        }
+
+
+        .detail-row strong {
+            color: #555;
+        }
+
+
+        .detail-row span {
+            text-align: right;
+        }
+
+
+        .modal-detail-footer {
+            margin-top: 18px;
+
+            text-align: right;
+        }
+
+
+        .btn-tutup {
+            border: none;
+
+            background: #6c757d;
+
+            color: white;
+
+            padding: 8px 15px;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+        }
+
+
+        .btn-tutup:hover {
+            opacity: 0.85;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .table-wrapper {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 1000px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="layout">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="sidebar">
+
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <div class="logo-box">
+                PB
+            </div>
+
+            <div>
+
+                <h2>Peminjaman</h2>
+
+                <span>
+                    Barang Sekolah
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- MENU -->
+
+        <nav>
+
+
+            <a href="dashboard.html">
+
+                <span>▣</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="barang.html">
+
+                <span>▤</span>
+
+                Data Barang
+
+            </a>
+
+
+            <a href="data-siswa.html">
+
+                <span>♙</span>
+
+                Data Siswa
+
+            </a>
+
+
+            <a href="peminjaman.html">
+
+                <span>⇄</span>
+
+                Peminjaman
+
+            </a>
+
+
+            <a href="konfirmasi.html" class="active">
+
+                <span>✓</span>
+
+                Konfirmasi
+
+            </a>
+
+
+            <a href="pengembalian.html">
+
+                <span>↩</span>
+
+                Pengembalian
+
+            </a>
+
+
+            <a href="laporan.html">
+
+                <span>▥</span>
+
+                Laporan
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- KELUAR -->
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html" onclick="logout()">
+
+                <span>↪</span>
+
+                Keluar
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+
+            <div>
+
+                <h1>
+                    Konfirmasi Peminjaman
+                </h1>
+
+                <p>
+                    Kelola pengajuan peminjaman barang dari siswa
+                </p>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div class="admin-profile">
+
+                <div class="profile-icon">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <small>
+                        Administrator
+                    </small>
+
+                </div>
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =========================
+             PANEL
+        ========================= -->
+
+        <section class="panel">
+
+
+            <!-- PANEL HEADER -->
+
+            <div class="panel-header">
+
+                <h2>
+                    Daftar Pengajuan
+                </h2>
+
+            </div>
+
+
+
+            <!-- NOTIFIKASI -->
+
+            <div
+                class="notifikasi"
+                id="notifikasi">
+
+                Memuat data pengajuan...
+
+            </div>
+
+
+
+            <!-- SEARCH -->
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Cari nama siswa, barang, atau ID transaksi..."
+                    onkeyup="cariData()">
+
+            </div>
+
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>No</th>
+
+                            <th>
+                                ID Transaksi
+                            </th>
+
+                            <th>
+                                Nama Siswa
+                            </th>
+
+                            <th>
+                                Kelas
+                            </th>
+
+                            <th>
+                                Barang
+                            </th>
+
+                            <th>
+                                Jumlah
+                            </th>
+
+                            <th>
+                                Tanggal Pinjam
+                            </th>
+
+                            <th>
+                                Tanggal Kembali
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Aksi
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tabelKonfirmasi">
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =========================
+     MODAL DETAIL
+========================= -->
+
+<div
+    class="modal-detail"
+    id="modalDetail">
+
+
+    <div class="modal-detail-content">
+
+
+        <!-- HEADER -->
+
+        <div class="modal-detail-header">
+
+            <h2>
+                Detail Peminjaman
+            </h2>
+
+            <button
+                type="button"
+                class="close-detail"
+                onclick="tutupDetail()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+
+        <!-- DETAIL -->
+
+        <div
+            class="detail-list"
+            id="detailIsi">
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="modal-detail-footer">
+
+            <button
+                type="button"
+                class="btn-tutup"
+                onclick="tutupDetail()">
+
+                Tutup
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   AMBIL DATA PEMINJAMAN
+===================================================== */
+
+function ambilData() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("riwayatPeminjaman")
+        ) || [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+
+/* =====================================================
+   SIMPAN DATA
+===================================================== */
+
+function simpanData(data) {
+
+    localStorage.setItem(
+        "riwayatPeminjaman",
+        JSON.stringify(data)
+    );
+
+}
+
+
+
+/* =====================================================
+   FORMAT STATUS
+===================================================== */
+
+function statusClass(status) {
+
+    switch (status) {
+
+        case "Disetujui":
+            return "status-disetujui";
+
+        case "Ditolak":
+            return "status-ditolak";
+
+        case "Dipinjam":
+            return "status-dipinjam";
+
+        case "Dikembalikan":
+        case "Kembali":
+            return "status-dikembalikan";
+
+        default:
+            return "status-menunggu";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   TAMPILKAN DATA
+===================================================== */
+
+function tampilkanData() {
+
+    const data = ambilData();
+
+    const tabel =
+        document.getElementById(
+            "tabelKonfirmasi"
+        );
+
+
+    tabel.innerHTML = "";
+
+
+    let jumlahMenunggu = 0;
+
+
+
+    /* =========================
+       DATA KOSONG
+    ========================= */
+
+    if (data.length === 0) {
+
+        tabel.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="10"
+                    class="kosong">
+
+                    Belum ada pengajuan peminjaman.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        updateNotifikasi(0);
+
+        return;
+
+    }
+
+
+
+    /* =========================
+       TAMPILKAN DATA
+    ========================= */
+
+    data.forEach(function(item, index) {
+
+
+        const status =
+            item.status || "Menunggu";
+
+
+        if (status === "Menunggu") {
+
+            jumlahMenunggu++;
+
+        }
+
+
+
+        /* =========================
+           TOMBOL AKSI
+        ========================= */
+
+        let aksi = `
+
+            <button
+                type="button"
+                class="btn-detail"
+                onclick="detailData(${index})">
+
+                Detail
+
+            </button>
+
+        `;
+
+
+
+        /* HANYA STATUS MENUNGGU
+           YANG BISA DISETUJUI/DITOLAK */
+
+        if (status === "Menunggu") {
+
+            aksi += `
+
+                <button
+                    type="button"
+                    class="btn-setujui"
+                    onclick="setujuiData(${index})">
+
+                    Setujui
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-tolak"
+                    onclick="tolakData(${index})">
+
+                    Tolak
+
+                </button>
+
+            `;
+
+        }
+
+
+
+        /* =========================
+           BUAT BARIS
+        ========================= */
+
+        const baris =
+            document.createElement("tr");
+
+
+        baris.innerHTML = `
+
+            <td>
+                ${index + 1}
+            </td>
+
+            <td>
+                ${item.id || "-"}
+            </td>
+
+            <td>
+                ${item.nama || "-"}
+            </td>
+
+            <td>
+                ${item.kelas || "-"}
+            </td>
+
+            <td>
+                ${item.barang || "-"}
+            </td>
+
+            <td>
+                ${item.jumlah || 0}
+            </td>
+
+            <td>
+                ${item.tanggalPinjam || "-"}
+            </td>
+
+            <td>
+                ${item.tanggalKembali || "-"}
+            </td>
+
+            <td>
+
+                <span class="badge ${statusClass(status)}">
+
+                    ${status}
+
+                </span>
+
+            </td>
+
+            <td>
+
+                ${aksi}
+
+            </td>
+
+        `;
+
+
+        tabel.appendChild(baris);
+
+    });
+
+
+
+    /* UPDATE NOTIFIKASI */
+
+    updateNotifikasi(
+        jumlahMenunggu
+    );
+
+}
+
+
+
+/* =====================================================
+   NOTIFIKASI
+===================================================== */
+
+function updateNotifikasi(jumlah) {
+
+    const notifikasi =
+        document.getElementById(
+            "notifikasi"
+        );
+
+
+    if (jumlah > 0) {
+
+        notifikasi.textContent =
+            "Terdapat " +
+            jumlah +
+            " pengajuan yang menunggu konfirmasi.";
+
+    } else {
+
+        notifikasi.textContent =
+            "Tidak ada pengajuan yang menunggu konfirmasi.";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   DETAIL DATA
+===================================================== */
+
+function detailData(index) {
+
+    const data = ambilData();
+
+    const item = data[index];
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+
+    document.getElementById(
+        "detailIsi"
+    ).innerHTML = `
+
+        <div class="detail-row">
+
+            <strong>
+                ID Transaksi
+            </strong>
+
+            <span>
+                ${item.id || "-"}
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>
+                Nama Siswa
+            </strong>
+
+            <span>
+                ${item.nama || "-"}
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>
+                Kelas
+            </strong>
+
+            <span>
+                ${item.kelas || "-"}
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>
+                Barang
+            </strong>
+
+            <span>
+                ${item.barang || "-"}
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>
+                Jumlah
+            </strong>
+
+            <span>
+                ${item.jumlah || 0}
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>
+                Tanggal Pinjam
+            </strong>
+
+            <span>
+                ${item.tanggalPinjam || "-"}
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>
+                Tanggal Kembali
+            </strong>
+
+            <span>
+                ${item.tanggalKembali || "-"}
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>
+                Keperluan
+            </strong>
+
+            <span>
+                ${item.keperluan || "-"}
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>
+                Status
+            </strong>
+
+            <span>
+                ${item.status || "Menunggu"}
+            </span>
+
+        </div>
+
+    `;
+
+
+
+    document.getElementById(
+        "modalDetail"
+    ).style.display = "flex";
+
+}
+
+
+
+/* =====================================================
+   TUTUP DETAIL
+===================================================== */
+
+function tutupDetail() {
+
+    document.getElementById(
+        "modalDetail"
+    ).style.display = "none";
+
+}
+
+
+
+/* =====================================================
+   SETUJUI PEMINJAMAN
+===================================================== */
+
+function setujuiData(index) {
+
+    const data = ambilData();
+
+    const item = data[index];
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    const yakin = confirm(
+
+        "Apakah Anda yakin ingin menyetujui pengajuan " +
+        (item.id || "") +
+        "?"
+
+    );
+
+
+    if (!yakin) {
+
+        return;
+
+    }
+
+
+
+    /* UBAH STATUS */
+
+    item.status = "Disetujui";
+
+
+    /* SIMPAN */
+
+    simpanData(data);
+
+
+    /* REFRESH */
+
+    tampilkanData();
+
+
+    alert(
+        "Pengajuan berhasil disetujui."
+    );
+
+}
+
+
+
+/* =====================================================
+   TOLAK PEMINJAMAN
+===================================================== */
+
+function tolakData(index) {
+
+    const data = ambilData();
+
+    const item = data[index];
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    const yakin = confirm(
+
+        "Apakah Anda yakin ingin menolak pengajuan " +
+        (item.id || "") +
+        "?"
+
+    );
+
+
+    if (!yakin) {
+
+        return;
+
+    }
+
+
+
+    /* UBAH STATUS */
+
+    item.status = "Ditolak";
+
+
+    /* SIMPAN */
+
+    simpanData(data);
+
+
+    /* REFRESH */
+
+    tampilkanData();
+
+
+    alert(
+        "Pengajuan berhasil ditolak."
+    );
+
+}
+
+
+
+/* =====================================================
+   PENCARIAN
+===================================================== */
+
+function cariData() {
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const baris =
+        document.querySelectorAll(
+            "#tabelKonfirmasi tr"
+        );
+
+
+    baris.forEach(function(row) {
+
+        const isi =
+            row.textContent
+            .toLowerCase();
+
+
+        if (isi.includes(input)) {
+
+            row.style.display = "";
+
+        } else {
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    localStorage.removeItem(
+        "loginRole"
+    );
+
+    localStorage.removeItem(
+        "loginUsername"
+    );
+
+}
+
+
+
+/* =====================================================
+   KLIK DI LUAR MODAL
+===================================================== */
+
+window.addEventListener(
+    "click",
+    function(event) {
+
+        const modal =
+            document.getElementById(
+                "modalDetail"
+            );
+
+
+        if (event.target === modal) {
+
+            tutupDetail();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   TOMBOL ESC
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            tutupDetail();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   JALANKAN SAAT HALAMAN DIBUKA
+===================================================== */
+
+tampilkanData();
+
+
+</script>
+
+
+</body>
+</html>

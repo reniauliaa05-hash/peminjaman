@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Petugas - Peminjaman Barang</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+    .welcome-card {
+        background: #2563eb;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .welcome-card h2 {
+        margin: 0 0 7px;
+        font-size: 20px;
+    }
+
+    .welcome-card p {
+        margin: 0;
+        font-size: 12px;
+        opacity: 0.9;
+    }
+
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .menu-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 18px;
+        transition: 0.2s;
+    }
+
+    .menu-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+    }
+
+    .menu-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #eff6ff;
+        color: #2563eb;
+
+        border-radius: 8px;
+
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .menu-card h3 {
+        margin: 0 0 6px;
+        font-size: 14px;
+    }
+
+    .menu-card p {
+        margin: 0 0 13px;
+        color: #777;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    .menu-card button {
+        border: none;
+        background: #2563eb;
+        color: white;
+        padding: 7px 12px;
+        border-radius: 5px;
+        font-size: 10px;
+        cursor: pointer;
+    }
+
+    .menu-card button:hover {
+        background: #1d4ed8;
+    }
+
+    .info-panel {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 18px;
+    }
+
+    .info-panel h2 {
+        margin: 0 0 15px;
+        font-size: 15px;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .info-box {
+        background: #f8fafc;
+        border-radius: 7px;
+        padding: 13px;
+    }
+
+    .info-box span {
+        display: block;
+        color: #777;
+        font-size: 10px;
+        margin-bottom: 5px;
+    }
+
+    .info-box strong {
+        font-size: 12px;
+    }
+
+    @media (max-width: 700px) {
+        .menu-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="layout">
+
+```
+<!-- SIDEBAR PETUGAS -->
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-box">PB</div>
+
+        <div>
+            <h2>Peminjaman</h2>
+            <span>Barang Sekolah</span>
+        </div>
+    </div>
+
+    <nav>
+
+        <a href="petugas.html" class="active">
+            <span>▣</span>
+            Dashboard
+        </a>
+
+        <a href="petugas-barang.html">
+            <span>▤</span>
+            Kelola Barang
+        </a>
+
+        <a href="petugas-peminjaman.html">
+            <span>⇄</span>
+            Peminjaman
+        </a>
+
+        <a href="petugas-pengembalian.html">
+            <span>↩</span>
+            Pengembalian
+        </a>
+
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <a href="index.html" onclick="logout()">
+            <span>↪</span>
+            Keluar
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+
+        <div>
+            <h1>Dashboard Petugas</h1>
+
+            <p>
+                Mengelola barang dan transaksi
+            </p>
+        </div>
+
+        <div class="admin-profile">
+
+            <div class="profile-icon">
+                P
+            </div>
+
+            <div>
+                <strong id="namaPetugas">
+                    Petugas
+                </strong>
+
+                <small>
+                    Petugas Sistem
+                </small>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- WELCOME -->
+    <section class="welcome-card">
+
+        <h2>
+            Selamat Datang, Petugas
+        </h2>
+
+        <p>
+            Kelola barang, peminjaman, dan pengembalian
+            melalui menu yang tersedia.
+        </p>
+
+    </section>
+
+
+    <!-- MENU PETUGAS -->
+    <section class="menu-grid">
+
+        <!-- KELOLA BARANG -->
+        <div class="menu-card">
+
+            <div class="menu-icon">
+                ▤
+            </div>
+
+            <h3>
+                Kelola Barang
+            </h3>
+
+            <p>
+                Melihat, menambah, mengubah,
+                dan menghapus data barang.
+            </p>
+
+            <button
+                type="button"
+                onclick="bukaHalaman('petugas-barang.html')"
+            >
+                Kelola Barang
+            </button>
+
+        </div>
+
+
+        <!-- PEMINJAMAN -->
+        <div class="menu-card">
+
+            <div class="menu-icon">
+                ⇄
+            </div>
+
+            <h3>
+                Peminjaman
+            </h3>
+
+            <p>
+                Mengelola data transaksi
+                peminjaman barang.
+            </p>
+
+            <button
+                type="button"
+                onclick="bukaHalaman('petugas-peminjaman.html')"
+            >
+                Kelola Peminjaman
+            </button>
+
+        </div>
+
+
+        <!-- PENGEMBALIAN -->
+        <div class="menu-card">
+
+            <div class="menu-icon">
+                ↩
+            </div>
+
+            <h3>
+                Pengembalian
+            </h3>
+
+            <p>
+                Mengelola proses dan data
+                pengembalian barang.
+            </p>
+
+            <button
+                type="button"
+                onclick="bukaHalaman('petugas-pengembalian.html')"
+            >
+                Kelola Pengembalian
+            </button>
+
+        </div>
+
+
+
+
+    </section>
+
+
+    <!-- INFORMASI PETUGAS -->
+    <section class="info-panel">
+
+        <h2>
+            Informasi Petugas
+        </h2>
+
+        <div class="info-grid">
+
+            <div class="info-box">
+
+                <span>
+                    Nama Pengguna
+                </span>
+
+                <strong id="infoNama">
+                    Petugas
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    Hak Akses
+                </span>
+
+                <strong>
+                    Kelola Barang & Transaksi
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    Status
+                </span>
+
+                <strong>
+                    Aktif
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+```
+
+</div>
+
+<script>
+
+    /* ==============================
+       DATA LOGIN
+    ============================== */
+
+    const role = localStorage.getItem("loginRole");
+    const username = localStorage.getItem("loginUsername");
+
+
+    /* ==============================
+       CEK AKSES PETUGAS
+    ============================== */
+
+    if (role !== "petugas") {
+
+        alert("Halaman ini khusus untuk Petugas.");
+
+        window.location.href = "index.html";
+
+    }
+
+
+    /* ==============================
+       TAMPILKAN NAMA PETUGAS
+    ============================== */
+
+    if (username) {
+
+        document.getElementById("namaPetugas").textContent = username;
+
+        document.getElementById("infoNama").textContent = username;
+
+    }
+
+
+    /* ==============================
+       PINDAH HALAMAN PETUGAS
+    ============================== */
+
+    function bukaHalaman(halaman) {
+
+        window.location.href = halaman;
+
+    }
+
+
+    /* ==============================
+       LOGOUT
+    ============================== */
+
+    function logout() {
+
+        localStorage.removeItem("loginRole");
+        localStorage.removeItem("loginUsername");
+
+    }
+
+</script>
+
+</body>
+</html>

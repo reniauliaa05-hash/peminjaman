@@ -1,0 +1,1559 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Petugas - Pengembalian Barang</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .page-header h2 {
+            margin: 0 0 6px;
+            font-size: 20px;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+            font-size: 12px;
+        }
+
+        .btn-primary {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 11px 16px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        /* STATISTIK */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .stat-card span {
+            display: block;
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .stat-card strong {
+            font-size: 25px;
+            color: #1e293b;
+        }
+
+        .stat-card small {
+            display: block;
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        /* PANEL */
+
+        .content-panel {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .panel-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 12px;
+            outline: none;
+            background: white;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            border-color: #2563eb;
+        }
+
+        /* TABEL */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        thead {
+            background: #f8fafc;
+        }
+
+        th {
+            padding: 13px 12px;
+            font-size: 11px;
+            color: #64748b;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px 12px;
+            font-size: 12px;
+            color: #334155;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge-baik {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-rusak {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-hilang {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-tepat {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-terlambat {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-belum {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .action-group {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-action {
+            border: none;
+            padding: 7px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .btn-edit {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .btn-delete {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .btn-return {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 35px 15px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 620px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .btn-close {
+            border: none;
+            background: #f1f5f9;
+            width: 32px;
+            height: 32px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #475569;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 12px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 75px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .btn-cancel {
+            background: #f1f5f9;
+            color: #475569;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-save {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-save:hover {
+            background: #1d4ed8;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+            padding: 12px;
+            border-radius: 7px;
+            font-size: 11px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fde68a;
+            padding: 12px;
+            border-radius: 7px;
+            font-size: 11px;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid {
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 13px;
+            }
+
+            .stat-card strong {
+                font-size: 21px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .content-panel {
+                padding: 14px;
+            }
+
+            .modal-content {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR PETUGAS -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-box">PB</div>
+
+            <div>
+                <h2>Peminjaman</h2>
+                <span>Barang Sekolah</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <a href="petugas.html">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+            <a href="petugas-barang.html">
+                <span>▤</span>
+                Kelola Barang
+            </a>
+
+            <a href="petugas-peminjaman.html">
+                <span>⇄</span>
+                Peminjaman
+            </a>
+
+            <a href="petugas-pengembalian.html" class="active">
+                <span>↩</span>
+                Pengembalian
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+
+            <a href="index.html" onclick="logout(event)">
+                <span>↪</span>
+                Keluar
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Pengembalian Barang</h1>
+                <p>Mencatat dan mengelola transaksi pengembalian barang sekolah</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="profile-icon">P</div>
+                <div>
+                    <strong id="namaPetugas">Petugas</strong>
+                    <small>Petugas Sistem</small>
+                </div>
+            </div>
+        </header>
+
+        <section class="page-header">
+            <div>
+                <h2>Data Pengembalian</h2>
+                <p>Kelola data barang yang sudah dikembalikan oleh peminjam.</p>
+            </div>
+
+            <button type="button" class="btn-primary" onclick="bukaModal()">
+                + Tambah Pengembalian
+            </button>
+        </section>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span>Total Pengembalian</span>
+                <strong id="totalPengembalian">0</strong>
+                <small>Seluruh transaksi</small>
+            </div>
+
+            <div class="stat-card">
+                <span>Tepat Waktu</span>
+                <strong id="totalTepat">0</strong>
+                <small>Pengembalian sesuai batas waktu</small>
+            </div>
+
+            <div class="stat-card">
+                <span>Terlambat</span>
+                <strong id="totalTerlambat">0</strong>
+                <small>Melewati batas pengembalian</small>
+            </div>
+
+            <div class="stat-card">
+                <span>Barang Bermasalah</span>
+                <strong id="totalBermasalah">0</strong>
+                <small>Rusak atau hilang</small>
+            </div>
+        </section>
+
+        <section class="content-panel">
+            <div class="panel-header">
+                <div>
+                    <h3>Daftar Transaksi Pengembalian</h3>
+                </div>
+
+                <div class="filter-group">
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Cari ID, nama peminjam, atau barang..."
+                        autocomplete="off"
+                        oninput="renderTabel()"
+                    >
+
+                    <select id="filterKondisi" onchange="renderTabel()">
+                        <option value="">Semua Kondisi</option>
+                        <option value="Baik">Baik</option>
+                        <option value="Rusak">Rusak</option>
+                        <option value="Hilang">Hilang</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>ID Pengembalian</th>
+                            <th>ID Peminjaman</th>
+                            <th>Nama Peminjam</th>
+                            <th>Nama Barang</th>
+                            <th>Jumlah</th>
+                            <th>Tgl Kembali</th>
+                            <th>Keterlambatan</th>
+                            <th>Kondisi</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelPengembalian"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-panel">
+            <div class="panel-header">
+                <div>
+                    <h3>Informasi Pengembalian</h3>
+                </div>
+            </div>
+
+            <div class="alert-info">
+                <strong>Petunjuk:</strong><br>
+                1. Pilih transaksi peminjaman yang sudah disetujui dan belum dikembalikan.<br>
+                2. Masukkan tanggal aktual barang dikembalikan.<br>
+                3. Periksa kondisi barang sebelum menyimpan transaksi.<br>
+                4. Pastikan jumlah barang yang dikembalikan tidak melebihi jumlah peminjaman.
+            </div>
+
+            <div class="alert-warning">
+                <strong>Perhatian:</strong><br>
+                Data pengembalian saat ini disimpan di browser menggunakan localStorage.
+                Data akan tetap tersedia selama localStorage browser tidak dihapus.
+            </div>
+        </section>
+
+    </main>
+
+</div>
+
+<!-- MODAL PENGEMBALIAN -->
+
+<div class="modal" id="modalPengembalian">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h3 id="judulModal">Tambah Pengembalian</h3>
+
+            <button
+                class="btn-close"
+                type="button"
+                onclick="tutupModal()"
+            >&times;</button>
+
+        </div>
+
+        <form
+            id="formPengembalian"
+            onsubmit="simpanPengembalian(event)"
+        >
+
+            <input type="hidden" id="editId">
+
+            <div class="form-grid">
+
+                <div class="form-group full">
+
+                    <label for="idPeminjaman">
+                        Transaksi Peminjaman *
+                    </label>
+
+                    <select
+                        id="idPeminjaman"
+                        required
+                        onchange="isiDataPeminjaman()"
+                    >
+                        <option value="">
+                            -- Pilih Peminjaman --
+                        </option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="namaPeminjam">
+                        Nama Peminjam
+                    </label>
+
+                    <input
+                        type="text"
+                        id="namaPeminjam"
+                        readonly
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="namaBarang">
+                        Nama Barang
+                    </label>
+
+                    <input
+                        type="text"
+                        id="namaBarang"
+                        readonly
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="jumlah">
+                        Jumlah Dikembalikan *
+                    </label>
+
+                    <input
+                        type="number"
+                        id="jumlah"
+                        min="1"
+                        value="1"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="tanggalPinjam">
+                        Tanggal Pinjam
+                    </label>
+
+                    <input
+                        type="date"
+                        id="tanggalPinjam"
+                        readonly
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="tanggalSeharusnya">
+                        Batas Pengembalian
+                    </label>
+
+                    <input
+                        type="date"
+                        id="tanggalSeharusnya"
+                        readonly
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="tanggalKembali">
+                        Tanggal Aktual Kembali *
+                    </label>
+
+                    <input
+                        type="date"
+                        id="tanggalKembali"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="kondisi">
+                        Kondisi Barang *
+                    </label>
+
+                    <select id="kondisi" required>
+                        <option value="Baik">Baik</option>
+                        <option value="Rusak">Rusak</option>
+                        <option value="Hilang">Hilang</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group full">
+
+                    <label for="keterangan">
+                        Keterangan
+                    </label>
+
+                    <textarea
+                        id="keterangan"
+                        placeholder="Catatan kondisi barang atau keterlambatan"
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn-cancel"
+                    onclick="tutupModal()"
+                >
+                    Batal
+                </button>
+
+                <button type="submit" class="btn-save">
+                    Simpan Pengembalian
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+    // =========================================
+    // 1. CEK LOGIN PETUGAS
+    // =========================================
+
+    const role = localStorage.getItem("loginRole");
+    const username = localStorage.getItem("loginUsername");
+
+    if (role !== "petugas") {
+        alert("Halaman ini khusus untuk Petugas.");
+        window.location.href = "index.html";
+    }
+
+    const el = id => document.getElementById(id);
+
+    if (username && el("namaPetugas")) {
+        el("namaPetugas").textContent = username;
+    }
+
+    // =========================================
+    // 2. SUMBER DATA
+    // =========================================
+    // Semua halaman Admin dan Petugas memakai data yang sama.
+    // Beberapa nama key lama juga dibaca agar data lama tidak hilang.
+
+    const KEY_PINJAM = "dataPeminjaman";
+    const KEY_KEMBALI = "dataPengembalian";
+
+    const KEY_KEMBALI_LAIN = [
+        "dataPengembalian",
+        "pengembalian",
+        "data_pengembalian",
+        "dataPengembalianBarang",
+        "pengembalianBarang"
+    ];
+
+    let dataPeminjaman = [];
+    let dataPengembalian = [];
+
+    function bacaArrayStorage(key) {
+        try {
+            const raw = localStorage.getItem(key);
+            if (!raw) return [];
+
+            const data = JSON.parse(raw);
+            return Array.isArray(data) ? data : [];
+        } catch (error) {
+            console.warn("Gagal membaca localStorage:", key, error);
+            return [];
+        }
+    }
+
+    function nilaiPertama(item, keys, nilaiDefault = "") {
+        for (const key of keys) {
+            if (
+                item &&
+                item[key] !== undefined &&
+                item[key] !== null &&
+                String(item[key]).trim() !== ""
+            ) {
+                return item[key];
+            }
+        }
+        return nilaiDefault;
+    }
+
+    function normalisasiStatus(status) {
+        return String(status ?? "")
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, " ");
+    }
+
+    function statusDisetujui(status) {
+        const s = normalisasiStatus(status);
+        return [
+            "disetujui",
+            "disetujui petugas",
+            "approved",
+            "approve"
+        ].includes(s);
+    }
+
+    function normalisasiKondisi(kondisi) {
+        const s = String(kondisi ?? "Baik").trim().toLowerCase();
+        if (s === "rusak") return "Rusak";
+        if (s === "hilang") return "Hilang";
+        return "Baik";
+    }
+
+    function normalisasiTanggal(tanggal) {
+        if (!tanggal) return "";
+
+        let value = String(tanggal).trim();
+
+        // Format ISO lengkap: 2026-10-05T00:00:00...
+        if (value.includes("T")) {
+            value = value.split("T")[0];
+        }
+
+        // Format dd/mm/yyyy atau dd-mm-yyyy
+        let match = value.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);
+        if (match) {
+            return `${match[3]}-${String(match[2]).padStart(2, "0")}-${String(match[1]).padStart(2, "0")}`;
+        }
+
+        return value;
+    }
+
+    function ambilDataPeminjaman() {
+        const data = bacaArrayStorage(KEY_PINJAM);
+
+        return data.map(item => ({
+            ...item,
+            id: nilaiPertama(item, ["id", "idPeminjaman", "peminjamanId"]),
+            namaPeminjam: nilaiPertama(item, ["namaPeminjam", "peminjam", "nama"]),
+            namaBarang: nilaiPertama(item, ["namaBarang", "barang", "namaBarangDipinjam"]),
+            jumlah: Number(nilaiPertama(item, ["jumlah", "qty", "jumlahPinjam"], 1)) || 1,
+            tanggalPinjam: normalisasiTanggal(nilaiPertama(item, ["tanggalPinjam", "tglPinjam", "tanggalPeminjaman"])),
+            tanggalKembali: normalisasiTanggal(nilaiPertama(item, ["tanggalKembali", "tanggalSeharusnya", "batasPengembalian", "tanggalPengembalian"])),
+            status: nilaiPertama(item, ["status", "statusPeminjaman"])
+        }));
+    }
+
+    function normalisasiPengembalian(item, index) {
+        const id = nilaiPertama(item, [
+            "id",
+            "idPengembalian",
+            "pengembalianId"
+        ], index + 1);
+
+        const idPeminjaman = nilaiPertama(item, [
+            "idPeminjaman",
+            "peminjamanId",
+            "idPinjam",
+            "id_peminjaman"
+        ]);
+
+        const tanggalPinjam = normalisasiTanggal(nilaiPertama(item, [
+            "tanggalPinjam",
+            "tglPinjam",
+            "tanggalPeminjaman"
+        ]));
+
+        const tanggalSeharusnya = normalisasiTanggal(nilaiPertama(item, [
+            "tanggalSeharusnya",
+            "tanggalJatuhTempo",
+            "batasPengembalian",
+            "tanggalBatas",
+            "tanggalKembaliSeharusnya",
+            "tanggalKembali"
+        ]));
+
+        const tanggalKembali = normalisasiTanggal(nilaiPertama(item, [
+            "tanggalAktualKembali",
+            "tanggalPengembalian",
+            "tglPengembalian",
+            "tanggalDikembalikan",
+            "tanggalKembaliAktual",
+            "tanggalKembaliActual",
+            "tanggalKembali"
+        ]));
+
+        return {
+            ...item,
+            id: Number(id) || index + 1,
+            idPeminjaman: Number(idPeminjaman) || idPeminjaman || "",
+            namaPeminjam: nilaiPertama(item, ["namaPeminjam", "peminjam", "nama"]),
+            namaBarang: nilaiPertama(item, ["namaBarang", "barang", "namaBarangDipinjam"]),
+            jumlah: Number(nilaiPertama(item, ["jumlah", "qty", "jumlahDikembalikan", "jumlahKembali"], 1)) || 1,
+            tanggalPinjam,
+            tanggalSeharusnya,
+            tanggalKembali,
+            kondisi: normalisasiKondisi(nilaiPertama(item, ["kondisi", "kondisiBarang"], "Baik")),
+            keterangan: nilaiPertama(item, ["keterangan", "catatan", "keteranganPengembalian"])
+        };
+    }
+
+    function ambilDataPengembalian() {
+        const hasil = [];
+        const sudahAda = new Set();
+
+        // Prioritas utama: key standar.
+        const utama = bacaArrayStorage(KEY_KEMBALI);
+        utama.forEach((item, index) => {
+            const normal = normalisasiPengembalian(item, index);
+            const unik = `${normal.id}|${normal.idPeminjaman}`;
+            if (!sudahAda.has(unik)) {
+                hasil.push(normal);
+                sudahAda.add(unik);
+            }
+        });
+
+        // Baca key lama/alternatif jika ada.
+        KEY_KEMBALI_LAIN.forEach(key => {
+            if (key === KEY_KEMBALI) return;
+
+            bacaArrayStorage(key).forEach((item, index) => {
+                const normal = normalisasiPengembalian(item, hasil.length + index);
+                const unik = `${normal.id}|${normal.idPeminjaman}`;
+
+                if (!sudahAda.has(unik)) {
+                    hasil.push(normal);
+                    sudahAda.add(unik);
+                }
+            });
+        });
+
+        return hasil;
+    }
+
+    function muatSemuaData() {
+        dataPeminjaman = ambilDataPeminjaman();
+        dataPengembalian = ambilDataPengembalian();
+    }
+
+    muatSemuaData();
+
+    // =========================================
+    // 3. SIMPAN DATA
+    // =========================================
+
+    function simpanStorage() {
+        localStorage.setItem(
+            KEY_KEMBALI,
+            JSON.stringify(dataPengembalian)
+        );
+    }
+
+    // =========================================
+    // 4. FORMAT ID
+    // =========================================
+
+    function formatIdPengembalian(id) {
+        const angka = String(id ?? "").replace(/\D/g, "");
+        return "KMB-" + String(angka || 0).padStart(3, "0");
+    }
+
+    function formatIdPeminjaman(id) {
+        const angka = String(id ?? "").replace(/\D/g, "");
+        return "PJM-" + String(angka || 0).padStart(3, "0");
+    }
+
+    function buatId() {
+        if (dataPengembalian.length === 0) return 1;
+
+        return Math.max(
+            ...dataPengembalian.map(item => Number(item.id) || 0)
+        ) + 1;
+    }
+
+    // =========================================
+    // 5. FORMAT TANGGAL
+    // =========================================
+
+    function formatTanggal(tanggal) {
+        if (!tanggal) return "-";
+
+        const value = normalisasiTanggal(tanggal);
+        const bagian = value.split("-");
+
+        if (bagian.length !== 3) return value;
+
+        return `${bagian[2]}/${bagian[1]}/${bagian[0]}`;
+    }
+
+    function tanggalHariIni() {
+        const sekarang = new Date();
+        const tahun = sekarang.getFullYear();
+        const bulan = String(sekarang.getMonth() + 1).padStart(2, "0");
+        const hari = String(sekarang.getDate()).padStart(2, "0");
+
+        return `${tahun}-${bulan}-${hari}`;
+    }
+
+    // =========================================
+    // 6. HITUNG KETERLAMBATAN
+    // =========================================
+
+    function hitungTerlambat(batas, aktual) {
+        if (!batas || !aktual) return 0;
+
+        const tanggalBatas = new Date(normalisasiTanggal(batas) + "T00:00:00");
+        const tanggalAktual = new Date(normalisasiTanggal(aktual) + "T00:00:00");
+
+        if (Number.isNaN(tanggalBatas.getTime()) || Number.isNaN(tanggalAktual.getTime())) {
+            return 0;
+        }
+
+        const selisih = tanggalAktual - tanggalBatas;
+        const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+
+        return Math.max(0, hari);
+    }
+
+    // =========================================
+    // 7. CARI DATA PEMINJAMAN
+    // =========================================
+
+    function cariPeminjaman(id) {
+        return dataPeminjaman.find(
+            item => String(item.id) === String(id)
+        );
+    }
+
+    // =========================================
+    // 8. CEK SUDAH DIKEMBALIKAN
+    // =========================================
+
+    function sudahDikembalikan(idPeminjaman, idPengembalian = null) {
+        return dataPengembalian.some(item => {
+            const idSama = String(item.idPeminjaman) === String(idPeminjaman);
+            const bukanDataEdit =
+                idPengembalian === null ||
+                String(item.id) !== String(idPengembalian);
+
+            return idSama && bukanDataEdit;
+        });
+    }
+
+    // =========================================
+    // 9. ISI DROPDOWN PEMINJAMAN
+    // =========================================
+
+    function renderPilihanPeminjaman(idTerpilih = "") {
+        // Data terbaru harus dibaca setiap modal dibuka.
+        muatSemuaData();
+
+        const select = el("idPeminjaman");
+        if (!select) return;
+
+        select.innerHTML = `
+            <option value="">-- Pilih Peminjaman --</option>
+        `;
+
+        const tersedia = dataPeminjaman.filter(item => statusDisetujui(item.status));
+
+        tersedia.forEach(item => {
+            const sudahKembali = sudahDikembalikan(item.id, idTerpilih || null);
+
+            if (sudahKembali && String(item.id) !== String(idTerpilih)) {
+                return;
+            }
+
+            const option = document.createElement("option");
+            option.value = item.id;
+            option.textContent =
+                `${formatIdPeminjaman(item.id)} - ${item.namaPeminjam || "Tanpa nama"} (${item.namaBarang || "Tanpa barang"})`;
+
+            select.appendChild(option);
+        });
+
+        if (idTerpilih !== "") {
+            select.value = String(idTerpilih);
+        }
+    }
+
+    // =========================================
+    // 10. ISI DATA OTOMATIS
+    // =========================================
+
+    function isiDataPeminjaman() {
+        const id = el("idPeminjaman").value;
+        const item = cariPeminjaman(id);
+
+        if (!item) {
+            el("namaPeminjam").value = "";
+            el("namaBarang").value = "";
+            el("tanggalPinjam").value = "";
+            el("tanggalSeharusnya").value = "";
+            el("tanggalKembali").min = "";
+            return;
+        }
+
+        el("namaPeminjam").value = item.namaPeminjam || "";
+        el("namaBarang").value = item.namaBarang || "";
+        el("tanggalPinjam").value = item.tanggalPinjam || "";
+        el("tanggalSeharusnya").value = item.tanggalKembali || "";
+        el("jumlah").value = Number(item.jumlah) || 1;
+
+        const inputTanggal = el("tanggalKembali");
+        inputTanggal.min = item.tanggalPinjam || "";
+
+        if (
+            inputTanggal.value &&
+            item.tanggalPinjam &&
+            inputTanggal.value < item.tanggalPinjam
+        ) {
+            inputTanggal.value = item.tanggalPinjam;
+        }
+    }
+
+    // =========================================
+    // 11. STATISTIK
+    // =========================================
+
+    function renderStatistik() {
+        const total = dataPengembalian.length;
+
+        const tepat = dataPengembalian.filter(item =>
+            hitungTerlambat(item.tanggalSeharusnya, item.tanggalKembali) === 0
+        ).length;
+
+        const terlambat = dataPengembalian.filter(item =>
+            hitungTerlambat(item.tanggalSeharusnya, item.tanggalKembali) > 0
+        ).length;
+
+        const bermasalah = dataPengembalian.filter(item =>
+            item.kondisi === "Rusak" || item.kondisi === "Hilang"
+        ).length;
+
+        el("totalPengembalian").textContent = total;
+        el("totalTepat").textContent = tepat;
+        el("totalTerlambat").textContent = terlambat;
+        el("totalBermasalah").textContent = bermasalah;
+    }
+
+    // =========================================
+    // 12. AMANKAN TEKS HTML
+    // =========================================
+
+    function escapeHTML(teks) {
+        return String(teks ?? "").replace(/[&<>"']/g, karakter => {
+            const konversi = {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            };
+            return konversi[karakter];
+        });
+    }
+
+    // =========================================
+    // 13. TAMPILKAN TABEL
+    // =========================================
+
+    function renderTabel() {
+        // Selalu ambil data terbaru supaya data Admin yang baru
+        // disimpan langsung terlihat ketika halaman Petugas dibuka/kembali.
+        muatSemuaData();
+
+        const tbody = el("tabelPengembalian");
+        const inputSearch = el("searchInput");
+        const selectKondisi = el("filterKondisi");
+
+        const keyword = (inputSearch?.value || "").toLowerCase().trim();
+        const filterKondisi = selectKondisi?.value || "";
+
+        const hasil = dataPengembalian.filter(item => {
+            const teksCari = [
+                item.namaPeminjam,
+                item.namaBarang,
+                item.id,
+                item.idPeminjaman,
+                formatIdPengembalian(item.id),
+                formatIdPeminjaman(item.idPeminjaman)
+            ]
+                .map(value => String(value ?? "").toLowerCase())
+                .join(" ");
+
+            const cocokKeyword = teksCari.includes(keyword);
+            const cocokKondisi =
+                filterKondisi === "" || item.kondisi === filterKondisi;
+
+            return cocokKeyword && cocokKondisi;
+        });
+
+        if (hasil.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="10" class="empty-state">
+                        Belum ada data pengembalian.
+                    </td>
+                </tr>
+            `;
+            renderStatistik();
+            return;
+        }
+
+        tbody.innerHTML = hasil.map((item, index) => {
+            const terlambat = hitungTerlambat(
+                item.tanggalSeharusnya,
+                item.tanggalKembali
+            );
+
+            const badgeKondisi = {
+                Baik: "badge-baik",
+                Rusak: "badge-rusak",
+                Hilang: "badge-hilang"
+            };
+
+            const badgeWaktu = terlambat > 0
+                ? "badge-terlambat"
+                : "badge-tepat";
+
+            const teksWaktu = terlambat > 0
+                ? `${terlambat} hari`
+                : "Tepat waktu";
+
+            return `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td><strong>${formatIdPengembalian(item.id)}</strong></td>
+                    <td>${formatIdPeminjaman(item.idPeminjaman)}</td>
+                    <td><strong>${escapeHTML(item.namaPeminjam || "-")}</strong></td>
+                    <td>${escapeHTML(item.namaBarang || "-")}</td>
+                    <td>${Number(item.jumlah) || 0}</td>
+                    <td>${formatTanggal(item.tanggalKembali)}</td>
+                    <td>
+                        <span class="badge ${badgeWaktu}">${teksWaktu}</span>
+                    </td>
+                    <td>
+                        <span class="badge ${badgeKondisi[item.kondisi] || "badge-baik"}">
+                            ${escapeHTML(item.kondisi || "-")}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-group">
+                            <button
+                                type="button"
+                                class="btn-action btn-edit"
+                                onclick="editPengembalian(${Number(item.id)})"
+                            >Edit</button>
+                            <button
+                                type="button"
+                                class="btn-action btn-delete"
+                                onclick="hapusPengembalian(${Number(item.id)})"
+                            >Hapus</button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }).join("");
+
+        renderStatistik();
+    }
+
+    // =========================================
+    // 14. BUKA MODAL TAMBAH
+    // =========================================
+
+    function bukaModal() {
+        muatSemuaData();
+
+        el("formPengembalian").reset();
+        el("editId").value = "";
+        el("judulModal").textContent = "Tambah Pengembalian";
+
+        renderPilihanPeminjaman();
+
+        el("jumlah").value = 1;
+        el("tanggalKembali").value = tanggalHariIni();
+        el("tanggalKembali").min = "";
+
+        el("modalPengembalian").classList.add("show");
+    }
+
+    // =========================================
+    // 15. TUTUP MODAL
+    // =========================================
+
+    function tutupModal() {
+        el("modalPengembalian").classList.remove("show");
+    }
+
+    // =========================================
+    // 16. TAMBAH / EDIT PENGEMBALIAN
+    // =========================================
+
+    function simpanPengembalian(event) {
+        event.preventDefault();
+
+        // Baca ulang agar tidak menimpa data Admin yang baru berubah.
+        muatSemuaData();
+
+        const idEdit = el("editId").value;
+        const idPeminjaman = el("idPeminjaman").value;
+        const itemPinjam = cariPeminjaman(idPeminjaman);
+
+        if (!itemPinjam) {
+            alert("Silakan pilih transaksi peminjaman yang valid.");
+            return;
+        }
+
+        if (!statusDisetujui(itemPinjam.status)) {
+            alert("Hanya peminjaman yang disetujui yang dapat dikembalikan.");
+            return;
+        }
+
+        if (sudahDikembalikan(idPeminjaman, idEdit || null)) {
+            alert("Transaksi ini sudah memiliki data pengembalian.");
+            return;
+        }
+
+        const jumlah = Number(el("jumlah").value);
+        const tanggalKembali = normalisasiTanggal(el("tanggalKembali").value);
+        const kondisi = normalisasiKondisi(el("kondisi").value);
+        const keterangan = el("keterangan").value.trim();
+
+        if (!tanggalKembali || jumlah < 1) {
+            alert("Mohon lengkapi data pengembalian.");
+            return;
+        }
+
+        if (
+            itemPinjam.tanggalPinjam &&
+            tanggalKembali < itemPinjam.tanggalPinjam
+        ) {
+            alert("Tanggal kembali tidak boleh lebih awal dari tanggal peminjaman.");
+            return;
+        }
+
+        if (jumlah > Number(itemPinjam.jumlah)) {
+            alert("Jumlah pengembalian melebihi jumlah peminjaman.");
+            return;
+        }
+
+        const dataBaru = {
+            id: idEdit ? Number(idEdit) : buatId(),
+            idPeminjaman: Number(itemPinjam.id) || itemPinjam.id,
+            namaPeminjam: itemPinjam.namaPeminjam || "",
+            namaBarang: itemPinjam.namaBarang || "",
+            jumlah,
+            tanggalPinjam: itemPinjam.tanggalPinjam || "",
+            tanggalSeharusnya: itemPinjam.tanggalKembali || "",
+            tanggalKembali,
+            kondisi,
+            keterangan
+        };
+
+        if (idEdit) {
+            const index = dataPengembalian.findIndex(
+                item => String(item.id) === String(idEdit)
+            );
+
+            if (index === -1) {
+                alert("Data pengembalian yang akan diedit tidak ditemukan.");
+                return;
+            }
+
+            dataPengembalian[index] = dataBaru;
+            alert("Data pengembalian berhasil diperbarui.");
+        } else {
+            dataPengembalian.push(dataBaru);
+            alert("Data pengembalian berhasil disimpan.");
+        }
+
+        simpanStorage();
+        renderTabel();
+        tutupModal();
+    }
+
+    // =========================================
+    // 17. EDIT PENGEMBALIAN
+    // =========================================
+
+    function editPengembalian(id) {
+        muatSemuaData();
+
+        const item = dataPengembalian.find(
+            data => String(data.id) === String(id)
+        );
+
+        if (!item) {
+            alert("Data pengembalian tidak ditemukan.");
+            return;
+        }
+
+        el("editId").value = item.id;
+
+        renderPilihanPeminjaman(item.idPeminjaman);
+
+        el("idPeminjaman").value = String(item.idPeminjaman);
+        isiDataPeminjaman();
+
+        el("jumlah").value = item.jumlah || 1;
+        el("tanggalKembali").value = item.tanggalKembali || tanggalHariIni();
+        el("kondisi").value = item.kondisi || "Baik";
+        el("keterangan").value = item.keterangan || "";
+        el("judulModal").textContent = "Edit Pengembalian";
+
+        el("modalPengembalian").classList.add("show");
+    }
+
+    // =========================================
+    // 18. HAPUS PENGEMBALIAN
+    // =========================================
+
+    function hapusPengembalian(id) {
+        muatSemuaData();
+
+        const item = dataPengembalian.find(
+            data => String(data.id) === String(id)
+        );
+
+        if (!item) {
+            alert("Data pengembalian tidak ditemukan.");
+            return;
+        }
+
+        const konfirmasi = confirm(
+            `Apakah kamu yakin ingin menghapus data pengembalian ${formatIdPengembalian(id)}?`
+        );
+
+        if (!konfirmasi) return;
+
+        dataPengembalian = dataPengembalian.filter(
+            data => String(data.id) !== String(id)
+        );
+
+        simpanStorage();
+        renderTabel();
+
+        alert("Data pengembalian berhasil dihapus.");
+    }
+
+    // =========================================
+    // 19. LOGOUT
+    // =========================================
+
+    function logout(event) {
+        if (event) event.preventDefault();
+
+        localStorage.removeItem("loginRole");
+        localStorage.removeItem("loginUsername");
+
+        window.location.href = "index.html";
+    }
+
+    // =========================================
+    // 20. KLIK DI LUAR MODAL
+    // =========================================
+
+    el("modalPengembalian").addEventListener("click", function(event) {
+        if (event.target === this) {
+            tutupModal();
+        }
+    });
+
+    // =========================================
+    // 21. DATA BERUBAH DARI HALAMAN/TAB LAIN
+    // =========================================
+
+    window.addEventListener("storage", function(event) {
+        if (
+            event.key === KEY_PINJAM ||
+            KEY_KEMBALI_LAIN.includes(event.key)
+        ) {
+            renderTabel();
+            renderPilihanPeminjaman(el("editId")?.value || "");
+        }
+    });
+
+    // =========================================
+    // 22. TAMPILKAN DATA AWAL
+    // =========================================
+
+    renderTabel();
+    renderPilihanPeminjaman();
+
+</script>
+
+</body>
+</html>

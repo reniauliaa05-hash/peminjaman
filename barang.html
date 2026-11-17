@@ -1,0 +1,690 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Barang</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-box">PB</div>
+            <div>
+                <h2>Peminjaman</h2>
+                <span>Barang Sekolah</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <a href="dashboard.html">
+                <span>▣</span>Dashboard
+            </a>
+
+            <a href="barang.html" class="active">
+                <span>▤</span>Data Barang
+            </a>
+
+            <a href="data-siswa.html">
+                <span>♙</span>Data Siswa
+            </a>
+
+            <a href="peminjaman.html">
+                <span>⇄</span>Peminjaman
+            </a>
+
+            <a href="konfirmasi.html">
+                <span>✓</span>Konfirmasi
+            </a>
+
+            <a href="pengembalian.html">
+                <span>↩</span>Pengembalian
+            </a>
+
+            <a href="laporan.html">
+                <span>▥</span>Laporan
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="index.html">
+                <span>↪</span>Keluar
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Data Barang</h1>
+                <p>Kelola data barang yang tersedia</p>
+            </div>
+
+            <div class="admin-profile">
+
+                <div class="profile-icon">A</div>
+
+                <div>
+                    <strong>Admin</strong>
+                    <small>Administrator</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- DATA BARANG -->
+        <section class="panel">
+
+            <div class="panel-header">
+
+                <h2>Daftar Barang</h2>
+
+                <button
+                    type="button"
+                    class="btn-primary"
+                    onclick="openModal()">
+                    + Tambah Barang
+                </button>
+
+            </div>
+
+
+            <!-- SEARCH -->
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Cari barang..."
+                    onkeyup="cariBarang()">
+
+            </div>
+
+
+            <!-- TABLE -->
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>No</th>
+                            <th>Kode Barang</th>
+                            <th>Nama Barang</th>
+                            <th>Kategori</th>
+                            <th>Jumlah</th>
+                            <th>Tersedia</th>
+                            <th>Kondisi</th>
+                            <th>Aksi</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tabelBarang">
+
+                        <tr>
+                            <td>1</td>
+                            <td>BRG001</td>
+                            <td>Laptop</td>
+                            <td>Elektronik</td>
+                            <td>10</td>
+                            <td>8</td>
+                            <td>
+                                <span class="badge baik">
+                                    Baik
+                                </span>
+                            </td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn-edit"
+                                    onclick="editBarang(this)">
+                                    Edit
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn-delete"
+                                    onclick="hapusBarang(this)">
+                                    Hapus
+                                </button>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>2</td>
+                            <td>BRG002</td>
+                            <td>Proyektor</td>
+                            <td>Elektronik</td>
+                            <td>5</td>
+                            <td>3</td>
+                            <td>
+                                <span class="badge baik">
+                                    Baik
+                                </span>
+                            </td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn-edit"
+                                    onclick="editBarang(this)">
+                                    Edit
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn-delete"
+                                    onclick="hapusBarang(this)">
+                                    Hapus
+                                </button>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>3</td>
+                            <td>BRG003</td>
+                            <td>Kamera</td>
+                            <td>Elektronik</td>
+                            <td>4</td>
+                            <td>2</td>
+                            <td>
+                                <span class="badge rusak">
+                                    Perbaikan
+                                </span>
+                            </td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn-edit"
+                                    onclick="editBarang(this)">
+                                    Edit
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn-delete"
+                                    onclick="hapusBarang(this)">
+                                    Hapus
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================
+     MODAL TAMBAH BARANG
+========================= -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Tambah Barang</h2>
+
+            <button
+                type="button"
+                onclick="closeModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- KODE -->
+        <div class="form-group">
+
+            <label>Kode Barang</label>
+
+            <input
+                type="text"
+                id="kodeBarang"
+                placeholder="Contoh: BRG004">
+
+        </div>
+
+
+        <!-- NAMA -->
+        <div class="form-group">
+
+            <label>Nama Barang</label>
+
+            <input
+                type="text"
+                id="namaBarang"
+                placeholder="Contoh: Keyboard">
+
+        </div>
+
+
+        <!-- KATEGORI -->
+        <div class="form-group">
+
+            <label>Kategori</label>
+
+            <select id="kategoriBarang">
+
+                <option value="">
+                    -- Pilih Kategori --
+                </option>
+
+                <option value="Elektronik">
+                    Elektronik
+                </option>
+
+                <option value="Alat Tulis">
+                    Alat Tulis
+                </option>
+
+                <option value="Peralatan">
+                    Peralatan
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- JUMLAH -->
+        <div class="form-group">
+
+            <label>Jumlah</label>
+
+            <input
+                type="number"
+                id="jumlahBarang"
+                placeholder="Jumlah barang"
+                min="1">
+
+        </div>
+
+
+        <!-- KONDISI -->
+        <div class="form-group">
+
+            <label>Kondisi</label>
+
+            <select id="kondisiBarang">
+
+                <option value="Baik">
+                    Baik
+                </option>
+
+                <option value="Perbaikan">
+                    Perbaikan
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- SIMPAN -->
+        <button
+            type="button"
+            class="btn-primary"
+            onclick="tambahBarang()">
+
+            Simpan
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   BUKA MODAL
+========================================= */
+
+function openModal() {
+
+    document.getElementById("modal").style.display = "flex";
+
+}
+
+
+/* =========================================
+   TUTUP MODAL
+========================================= */
+
+function closeModal() {
+
+    document.getElementById("modal").style.display = "none";
+
+}
+
+
+/* =========================================
+   TAMBAH BARANG
+========================================= */
+
+function tambahBarang() {
+
+    // Mengambil data dari form
+
+    const kode =
+        document.getElementById("kodeBarang").value.trim();
+
+    const nama =
+        document.getElementById("namaBarang").value.trim();
+
+    const kategori =
+        document.getElementById("kategoriBarang").value;
+
+    const jumlah =
+        document.getElementById("jumlahBarang").value;
+
+    const kondisi =
+        document.getElementById("kondisiBarang").value;
+
+
+    // Validasi
+
+    if (
+        kode === "" ||
+        nama === "" ||
+        kategori === "" ||
+        jumlah === ""
+    ) {
+
+        alert("Silakan lengkapi semua data barang!");
+
+        return;
+
+    }
+
+
+    // Ambil tabel
+
+    const tabel =
+        document.getElementById("tabelBarang");
+
+
+    // Menentukan nomor barang
+
+    const nomor =
+        tabel.querySelectorAll("tr").length + 1;
+
+
+    // Membuat baris baru
+
+    const baris =
+        document.createElement("tr");
+
+
+    // Menentukan badge kondisi
+
+    let badgeClass = "baik";
+
+    if (kondisi === "Perbaikan") {
+
+        badgeClass = "rusak";
+
+    }
+
+
+    // Isi baris
+
+    baris.innerHTML = `
+
+        <td>${nomor}</td>
+
+        <td>${kode}</td>
+
+        <td>${nama}</td>
+
+        <td>${kategori}</td>
+
+        <td>${jumlah}</td>
+
+        <td>${jumlah}</td>
+
+        <td>
+            <span class="badge ${badgeClass}">
+                ${kondisi}
+            </span>
+        </td>
+
+        <td>
+
+            <button
+                type="button"
+                class="btn-edit"
+                onclick="editBarang(this)">
+                Edit
+            </button>
+
+            <button
+                type="button"
+                class="btn-delete"
+                onclick="hapusBarang(this)">
+                Hapus
+            </button>
+
+        </td>
+
+    `;
+
+
+    // Masukkan ke tabel
+
+    tabel.appendChild(baris);
+
+
+    // Kosongkan form
+
+    document.getElementById("kodeBarang").value = "";
+
+    document.getElementById("namaBarang").value = "";
+
+    document.getElementById("kategoriBarang").value = "";
+
+    document.getElementById("jumlahBarang").value = "";
+
+    document.getElementById("kondisiBarang").value = "Baik";
+
+
+    // Tutup modal
+
+    closeModal();
+
+
+    alert("Barang berhasil ditambahkan!");
+
+}
+
+
+/* =========================================
+   HAPUS BARANG
+========================================= */
+
+function hapusBarang(button) {
+
+    const yakin =
+        confirm("Apakah Anda yakin ingin menghapus barang ini?");
+
+
+    if (yakin) {
+
+        button.closest("tr").remove();
+
+        perbaruiNomor();
+
+    }
+
+}
+
+
+/* =========================================
+   PERBARUI NOMOR
+========================================= */
+
+function perbaruiNomor() {
+
+    const baris =
+        document.querySelectorAll("#tabelBarang tr");
+
+
+    baris.forEach((row, index) => {
+
+        row.cells[0].textContent = index + 1;
+
+    });
+
+}
+
+
+/* =========================================
+   EDIT BARANG
+========================================= */
+
+function editBarang(button) {
+
+    const baris =
+        button.closest("tr");
+
+
+    const kode =
+        baris.cells[1].textContent;
+
+    const nama =
+        baris.cells[2].textContent;
+
+    const kategori =
+        baris.cells[3].textContent;
+
+    const jumlah =
+        baris.cells[4].textContent;
+
+    const kondisi =
+        baris.cells[6].textContent.trim();
+
+
+    // Masukkan data ke form
+
+    document.getElementById("kodeBarang").value =
+        kode;
+
+    document.getElementById("namaBarang").value =
+        nama;
+
+    document.getElementById("kategoriBarang").value =
+        kategori;
+
+    document.getElementById("jumlahBarang").value =
+        jumlah;
+
+    document.getElementById("kondisiBarang").value =
+        kondisi;
+
+
+    // Hapus baris lama
+
+    baris.remove();
+
+    perbaruiNomor();
+
+
+    // Buka modal
+
+    openModal();
+
+}
+
+
+/* =========================================
+   PENCARIAN
+========================================= */
+
+function cariBarang() {
+
+    const input =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+
+    const baris =
+        document.querySelectorAll("#tabelBarang tr");
+
+
+    baris.forEach(row => {
+
+        const isi =
+            row.textContent.toLowerCase();
+
+
+        if (isi.includes(input)) {
+
+            row.style.display = "";
+
+        } else {
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+/* =========================================
+   TUTUP MODAL KETIKA KLIK DI LUAR
+========================================= */
+
+window.onclick = function(event) {
+
+    const modal =
+        document.getElementById("modal");
+
+
+    if (event.target === modal) {
+
+        closeModal();
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>
+```

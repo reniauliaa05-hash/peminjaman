@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Peminjaman Barang</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-box">PB</div>
+            <div>
+                <h2>Peminjaman</h2>
+                <span>Barang Sekolah</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <a href="dashboard.html" class="active">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+            <a href="barang.html">
+                <span>▤</span>
+                Data Barang
+            </a>
+
+            <a href="data-siswa.html">
+                <span>♙</span>
+                Data Siswa
+            </a>
+
+            <a href="peminjaman.html">
+                <span>⇄</span>
+                Peminjaman
+            </a>
+
+            <a href="konfirmasi.html">
+                <span>✓</span>
+                Konfirmasi
+            </a>
+
+            <a href="pengembalian.html">
+                <span>↩</span>
+                Pengembalian
+            </a>
+
+            <a href="laporan.html">
+                <span>▥</span>
+                Laporan
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="index.html" onclick="logout()">
+                <span>↪</span>
+                Keluar
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Dashboard</h1>
+                <p>Selamat datang di Sistem Peminjaman Barang</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="profile-icon">A</div>
+                <div>
+                    <strong>Admin</strong>
+                    <small>Administrator</small>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- STATISTIK -->
+        <section class="stat-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon blue">▤</div>
+                <div>
+                    <span>Total Barang</span>
+                    <h2>25</h2>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green">♙</div>
+                <div>
+                    <span>Total Siswa</span>
+                    <h2>120</h2>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange">⇄</div>
+                <div>
+                    <span>Sedang Dipinjam</span>
+                    <h2>12</h2>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple">↩</div>
+                <div>
+                    <span>Sudah Dikembalikan</span>
+                    <h2>48</h2>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- INFORMASI -->
+        <section class="content-grid">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h2>Peminjaman Terbaru</h2>
+                    <a href="peminjaman.html">Lihat Semua</a>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Siswa</th>
+                                <th>Barang</th>
+                                <th>Tanggal</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>1</td>
+                                <td>Andi Saputra</td>
+                                <td>Laptop</td>
+                                <td>22/09/2026</td>
+                                <td>
+                                    <span class="badge dipinjam">Dipinjam</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>Budi Santoso</td>
+                                <td>Proyektor</td>
+                                <td>21/09/2026</td>
+                                <td>
+                                    <span class="badge kembali">Dikembalikan</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>3</td>
+                                <td>Citra Dewi</td>
+                                <td>Kamera</td>
+                                <td>20/09/2026</td>
+                                <td>
+                                    <span class="badge dipinjam">Dipinjam</span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h2>Informasi Sistem</h2>
+                </div>
+
+                <div class="info-list">
+
+                    <div class="info-item">
+                        <span>Total Transaksi</span>
+                        <strong>60</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Barang Tersedia</span>
+                        <strong>13</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Barang Dipinjam</span>
+                        <strong>12</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Data Siswa</span>
+                        <strong>120</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

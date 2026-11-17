@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Peminjaman</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ==============================
+           MODAL PEMINJAMAN KHUSUS
+        ============================== */
+
+        #modal .modal-content {
+            width: 380px;
+            max-width: 90%;
+            padding: 14px;
+            border-radius: 9px;
+            box-sizing: border-box;
+        }
+
+        #modal .modal-header {
+            margin-bottom: 9px;
+        }
+
+        #modal .modal-header h2 {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        #modal .modal-header button {
+            font-size: 20px;
+            padding: 0 4px;
+        }
+
+        /* FORM 2 KOLOM */
+
+        #modal .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px 9px;
+        }
+
+        #modal .form-group {
+            margin: 0;
+        }
+
+        #modal .form-group label {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        #modal .form-group input,
+        #modal .form-group select {
+            width: 100%;
+            height: 29px;
+            padding: 4px 7px;
+            font-size: 10px;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* STATUS FULL WIDTH */
+
+        #modal .status-group {
+            grid-column: 1 / -1;
+        }
+
+        /* BUTTON */
+
+        #modal .btn-simpan {
+            grid-column: 1 / -1;
+            width: 100%;
+            height: 30px;
+            padding: 5px;
+            margin-top: 2px;
+            font-size: 10px;
+            border-radius: 5px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 500px) {
+
+            #modal .modal-content {
+                width: 350px;
+                max-width: 94%;
+                padding: 12px;
+            }
+
+            #modal .form-grid {
+                gap: 6px 7px;
+            }
+
+            #modal .form-group label {
+                font-size: 9px;
+            }
+
+            #modal .form-group input,
+            #modal .form-group select {
+                height: 27px;
+                font-size: 9px;
+                padding: 3px 6px;
+            }
+
+            #modal .btn-simpan {
+                height: 28px;
+                font-size: 9px;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="layout">
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-box">
+                PB
+            </div>
+
+            <div>
+                <h2>Peminjaman</h2>
+                <span>Barang Sekolah</span>
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="dashboard.html">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+            <a href="barang.html">
+                <span>▤</span>
+                Data Barang
+            </a>
+
+            <a href="data-siswa.html">
+                <span>♙</span>
+                Data Siswa
+            </a>
+
+            <a href="peminjaman.html" class="active">
+                <span>⇄</span>
+                Peminjaman
+            </a>
+
+            <a href="konfirmasi.html">
+                <span>✓</span>
+                Konfirmasi
+            </a>
+
+            <a href="pengembalian.html">
+                <span>↩</span>
+                Pengembalian
+            </a>
+
+            <a href="laporan.html">
+                <span>▥</span>
+                Laporan
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                <span>↪</span>
+                Keluar
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= KONTEN UTAMA ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Peminjaman Barang
+                </h1>
+
+                <p>
+                    Mencatat transaksi peminjaman barang
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="profile-icon">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <small>
+                        Administrator
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= PANEL ================= -->
+
+        <section class="panel">
+
+
+            <div class="panel-header">
+
+                <h2>
+                    Data Peminjaman
+                </h2>
+
+                <button
+                    type="button"
+                    class="btn-primary"
+                    onclick="openModal()">
+
+                    + Tambah Peminjaman
+
+                </button>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Cari ID transaksi, siswa, atau barang..."
+                    onkeyup="cariPeminjaman()">
+
+            </div>
+
+
+            <!-- ================= TABEL ================= -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>No</th>
+                            <th>ID Transaksi</th>
+                            <th>Siswa</th>
+                            <th>Barang</th>
+                            <th>Jumlah</th>
+                            <th>Tanggal Pinjam</th>
+                            <th>Batas Kembali</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tabelPeminjaman">
+
+
+                        <!-- DATA 1 -->
+
+                        <tr>
+
+                            <td>1</td>
+
+                            <td>PMJ001</td>
+
+                            <td>Andi Saputra</td>
+
+                            <td>Laptop</td>
+
+                            <td>1</td>
+
+                            <td>22/09/2026</td>
+
+                            <td>24/09/2026</td>
+
+                            <td>
+
+                                <span class="badge dipinjam">
+                                    Dipinjam
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="btn-edit"
+                                    onclick="editPeminjaman(this)">
+
+                                    Edit
+
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn-delete"
+                                    onclick="hapusPeminjaman(this)">
+
+                                    Hapus
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- DATA 2 -->
+
+                        <tr>
+
+                            <td>2</td>
+
+                            <td>PMJ002</td>
+
+                            <td>Budi Santoso</td>
+
+                            <td>Proyektor</td>
+
+                            <td>1</td>
+
+                            <td>21/09/2026</td>
+
+                            <td>23/09/2026</td>
+
+                            <td>
+
+                                <span class="badge dipinjam">
+                                    Dipinjam
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="btn-edit"
+                                    onclick="editPeminjaman(this)">
+
+                                    Edit
+
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn-delete"
+                                    onclick="hapusPeminjaman(this)">
+
+                                    Hapus
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- MODAL TAMBAH PEMINJAMAN -->
+<!-- ================================================= -->
+
+<div
+    class="modal"
+    id="modal">
+
+
+    <div class="modal-content">
+
+
+        <!-- HEADER -->
+
+        <div class="modal-header">
+
+            <h2 id="judulModal">
+                Tambah Peminjaman
+            </h2>
+
+            <button
+                type="button"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- ================= FORM ================= -->
+
+        <div class="form-grid">
+
+
+            <!-- ID TRANSAKSI -->
+
+            <div class="form-group">
+
+                <label for="idTransaksi">
+                    ID Transaksi
+                </label>
+
+                <input
+                    type="text"
+                    id="idTransaksi"
+                    placeholder="PMJ003">
+
+            </div>
+
+
+            <!-- NAMA SISWA -->
+
+            <div class="form-group">
+
+                <label for="namaSiswa">
+                    Nama Siswa
+                </label>
+
+                <input
+                    type="text"
+                    id="namaSiswa"
+                    placeholder="Nama siswa">
+
+            </div>
+
+
+            <!-- NAMA BARANG -->
+
+            <div class="form-group">
+
+                <label for="namaBarang">
+                    Nama Barang
+                </label>
+
+                <input
+                    type="text"
+                    id="namaBarang"
+                    placeholder="Nama barang">
+
+            </div>
+
+
+            <!-- JUMLAH -->
+
+            <div class="form-group">
+
+                <label for="jumlah">
+                    Jumlah
+                </label>
+
+                <input
+                    type="number"
+                    id="jumlah"
+                    placeholder="Jumlah"
+                    min="1">
+
+            </div>
+
+
+            <!-- TANGGAL PINJAM -->
+
+            <div class="form-group">
+
+                <label for="tanggalPinjam">
+                    Tanggal Pinjam
+                </label>
+
+                <input
+                    type="date"
+                    id="tanggalPinjam">
+
+            </div>
+
+
+            <!-- BATAS KEMBALI -->
+
+            <div class="form-group">
+
+                <label for="batasKembali">
+                    Batas Kembali
+                </label>
+
+                <input
+                    type="date"
+                    id="batasKembali">
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="form-group status-group">
+
+                <label for="statusPeminjaman">
+                    Status
+                </label>
+
+                <select id="statusPeminjaman">
+
+                    <option value="Dipinjam">
+                        Dipinjam
+                    </option>
+
+                    <option value="Dikembalikan">
+                        Dikembalikan
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- TOMBOL -->
+
+            <button
+                type="button"
+                class="btn-primary btn-simpan"
+                onclick="simpanPeminjaman()">
+
+                Simpan
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+
+<script>
+
+
+let barisEdit = null;
+
+
+/* ==============================
+   BUKA MODAL
+============================== */
+
+function openModal() {
+
+    document.getElementById("judulModal").textContent =
+        "Tambah Peminjaman";
+
+    barisEdit = null;
+
+    kosongkanForm();
+
+    document.getElementById("modal").style.display =
+        "flex";
+
+}
+
+
+/* ==============================
+   TUTUP MODAL
+============================== */
+
+function closeModal() {
+
+    document.getElementById("modal").style.display =
+        "none";
+
+}
+
+
+/* ==============================
+   KOSONGKAN FORM
+============================== */
+
+function kosongkanForm() {
+
+    document.getElementById("idTransaksi").value = "";
+
+    document.getElementById("namaSiswa").value = "";
+
+    document.getElementById("namaBarang").value = "";
+
+    document.getElementById("jumlah").value = "";
+
+    document.getElementById("tanggalPinjam").value = "";
+
+    document.getElementById("batasKembali").value = "";
+
+    document.getElementById("statusPeminjaman").value =
+        "Dipinjam";
+
+}
+
+
+/* ==============================
+   FORMAT TANGGAL
+============================== */
+
+function formatTanggal(tanggal) {
+
+    if (!tanggal) {
+        return "";
+    }
+
+    const bagian = tanggal.split("-");
+
+    return (
+        bagian[2] +
+        "/" +
+        bagian[1] +
+        "/" +
+        bagian[0]
+    );
+
+}
+
+
+/* ==============================
+   SIMPAN
+============================== */
+
+function simpanPeminjaman() {
+
+    const idTransaksi =
+        document.getElementById("idTransaksi").value.trim();
+
+    const namaSiswa =
+        document.getElementById("namaSiswa").value.trim();
+
+    const namaBarang =
+        document.getElementById("namaBarang").value.trim();
+
+    const jumlah =
+        document.getElementById("jumlah").value;
+
+    const tanggalPinjam =
+        document.getElementById("tanggalPinjam").value;
+
+    const batasKembali =
+        document.getElementById("batasKembali").value;
+
+    const status =
+        document.getElementById("statusPeminjaman").value;
+
+
+    /* VALIDASI */
+
+    if (
+        idTransaksi === "" ||
+        namaSiswa === "" ||
+        namaBarang === "" ||
+        jumlah === "" ||
+        tanggalPinjam === "" ||
+        batasKembali === ""
+    ) {
+
+        alert(
+            "Silakan lengkapi semua data peminjaman!"
+        );
+
+        return;
+
+    }
+
+
+    if (Number(jumlah) <= 0) {
+
+        alert(
+            "Jumlah barang harus lebih dari 0!"
+        );
+
+        return;
+
+    }
+
+
+    if (batasKembali < tanggalPinjam) {
+
+        alert(
+            "Batas kembali tidak boleh sebelum tanggal pinjam!"
+        );
+
+        return;
+
+    }
+
+
+    /* ==============================
+       EDIT
+    ============================== */
+
+    if (barisEdit !== null) {
+
+        barisEdit.cells[1].textContent =
+            idTransaksi;
+
+        barisEdit.cells[2].textContent =
+            namaSiswa;
+
+        barisEdit.cells[3].textContent =
+            namaBarang;
+
+        barisEdit.cells[4].textContent =
+            jumlah;
+
+        barisEdit.cells[5].textContent =
+            formatTanggal(tanggalPinjam);
+
+        barisEdit.cells[6].textContent =
+            formatTanggal(batasKembali);
+
+        barisEdit.cells[7].innerHTML = `
+            <span class="badge ${
+                status === "Dipinjam"
+                    ? "dipinjam"
+                    : "dikembalikan"
+            }">
+                ${status}
+            </span>
+        `;
+
+        alert(
+            "Data peminjaman berhasil diperbarui!"
+        );
+
+    }
+
+
+    /* ==============================
+       TAMBAH
+    ============================== */
+
+    else {
+
+        const tabel =
+            document.getElementById(
+                "tabelPeminjaman"
+            );
+
+        const baris =
+            document.createElement("tr");
+
+        const nomor =
+            tabel.querySelectorAll("tr").length + 1;
+
+
+        baris.innerHTML = `
+
+            <td>${nomor}</td>
+
+            <td>${idTransaksi}</td>
+
+            <td>${namaSiswa}</td>
+
+            <td>${namaBarang}</td>
+
+            <td>${jumlah}</td>
+
+            <td>${formatTanggal(tanggalPinjam)}</td>
+
+            <td>${formatTanggal(batasKembali)}</td>
+
+            <td>
+
+                <span class="badge ${
+                    status === "Dipinjam"
+                        ? "dipinjam"
+                        : "dikembalikan"
+                }">
+
+                    ${status}
+
+                </span>
+
+            </td>
+
+            <td>
+
+                <button
+                    type="button"
+                    class="btn-edit"
+                    onclick="editPeminjaman(this)">
+
+                    Edit
+
+                </button>
+
+                <button
+                    type="button"
+                    class="btn-delete"
+                    onclick="hapusPeminjaman(this)">
+
+                    Hapus
+
+                </button>
+
+            </td>
+
+        `;
+
+
+        tabel.appendChild(baris);
+
+
+        alert(
+            "Peminjaman berhasil ditambahkan!"
+        );
+
+    }
+
+
+    kosongkanForm();
+
+    closeModal();
+
+    perbaruiNomor();
+
+}
+
+
+/* ==============================
+   EDIT PEMINJAMAN
+============================== */
+
+function editPeminjaman(button) {
+
+    const baris =
+        button.closest("tr");
+
+
+    document.getElementById("idTransaksi").value =
+        baris.cells[1].textContent.trim();
+
+
+    document.getElementById("namaSiswa").value =
+        baris.cells[2].textContent.trim();
+
+
+    document.getElementById("namaBarang").value =
+        baris.cells[3].textContent.trim();
+
+
+    document.getElementById("jumlah").value =
+        baris.cells[4].textContent.trim();
+
+
+    const tanggalPinjam =
+        baris.cells[5].textContent.trim().split("/");
+
+
+    if (tanggalPinjam.length === 3) {
+
+        document.getElementById("tanggalPinjam").value =
+            tanggalPinjam[2] +
+            "-" +
+            tanggalPinjam[1] +
+            "-" +
+            tanggalPinjam[0];
+
+    }
+
+
+    const batasKembali =
+        baris.cells[6].textContent.trim().split("/");
+
+
+    if (batasKembali.length === 3) {
+
+        document.getElementById("batasKembali").value =
+            batasKembali[2] +
+            "-" +
+            batasKembali[1] +
+            "-" +
+            batasKembali[0];
+
+    }
+
+
+    const status =
+        baris.cells[7].textContent.trim();
+
+
+    document.getElementById("statusPeminjaman").value =
+        status;
+
+
+    barisEdit =
+        baris;
+
+
+    document.getElementById("judulModal").textContent =
+        "Edit Peminjaman";
+
+
+    document.getElementById("modal").style.display =
+        "flex";
+
+}
+
+
+/* ==============================
+   HAPUS
+============================== */
+
+function hapusPeminjaman(button) {
+
+    const yakin =
+        confirm(
+            "Apakah Anda yakin ingin menghapus peminjaman ini?"
+        );
+
+
+    if (yakin) {
+
+        button.closest("tr").remove();
+
+        perbaruiNomor();
+
+        alert(
+            "Data peminjaman berhasil dihapus!"
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   UPDATE NOMOR
+============================== */
+
+function perbaruiNomor() {
+
+    const baris =
+        document.querySelectorAll(
+            "#tabelPeminjaman tr"
+        );
+
+
+    baris.forEach(
+        function(row, index) {
+
+            row.cells[0].textContent =
+                index + 1;
+
+        }
+    );
+
+}
+
+
+/* ==============================
+   PENCARIAN
+============================== */
+
+function cariPeminjaman() {
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        ).value.toLowerCase();
+
+
+    const baris =
+        document.querySelectorAll(
+            "#tabelPeminjaman tr"
+        );
+
+
+    baris.forEach(
+        function(row) {
+
+            const isi =
+                row.textContent.toLowerCase();
+
+
+            if (isi.includes(input)) {
+
+                row.style.display = "";
+
+            } else {
+
+                row.style.display = "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==============================
+   KLIK DI LUAR MODAL
+============================== */
+
+window.onclick = function(event) {
+
+    const modal =
+        document.getElementById("modal");
+
+
+    if (event.target === modal) {
+
+        closeModal();
+
+    }
+
+};
+
+
+</script>
+
+
+</body>
+</html>

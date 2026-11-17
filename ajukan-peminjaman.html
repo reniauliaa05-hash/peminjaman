@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajukan Peminjaman</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .form-panel {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .form-panel h2 {
+            margin: 0 0 5px;
+            font-size: 17px;
+        }
+
+        .form-panel > p {
+            margin: 0 0 18px;
+            color: #777;
+            font-size: 12px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 11px;
+            outline: none;
+        }
+
+        .form-group input,
+        .form-group select {
+            height: 34px;
+        }
+
+        .form-group textarea {
+            height: 70px;
+            resize: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+        }
+
+        .form-buttons {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 8px;
+            margin-top: 3px;
+        }
+
+        .form-buttons button {
+            height: 34px;
+            padding: 5px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .btn-reset {
+            background: #e5e7eb;
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full,
+            .form-buttons {
+                grid-column: auto;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-box">PB</div>
+            <div>
+                <h2>Peminjaman</h2>
+                <span>Barang Sekolah</span>
+            </div>
+        </div>
+
+        <nav>
+            <a href="siswa.html">
+                <span>▣</span>Dashboard
+            </a>
+
+            <a href="ajukan-peminjaman.html" class="active">
+                <span>⇄</span>Ajukan Peminjaman
+            </a>
+
+            <a href="riwayat-peminjaman.html">
+                <span>▤</span>Riwayat Peminjaman
+            </a>
+
+            <a href="profil-siswa.html">
+                <span>♙</span>Profil
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="index.html">
+                <span>↪</span>Keluar
+            </a>
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Ajukan Peminjaman</h1>
+                <p>Mengajukan peminjaman barang sekolah</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="profile-icon">S</div>
+
+                <div>
+                    <strong id="namaHeader">Andi Saputra</strong>
+                    <small>Siswa</small>
+                </div>
+            </div>
+
+        </header>
+
+
+        <section class="form-panel">
+
+            <h2>Form Peminjaman Barang</h2>
+
+            <p>
+                Isi data berikut untuk mengajukan peminjaman barang.
+            </p>
+
+
+            <form id="formPeminjaman">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Nama Siswa</label>
+                        <input
+                            type="text"
+                            id="namaSiswa"
+                            value="Andi Saputra"
+                            readonly
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Kelas</label>
+                        <input
+                            type="text"
+                            id="kelasSiswa"
+                            value="XII RPL 1"
+                            readonly
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="barang">Nama Barang</label>
+
+                        <select id="barang" required>
+                            <option value="">-- Pilih Barang --</option>
+                            <option>Laptop</option>
+                            <option>Proyektor</option>
+                            <option>Kamera</option>
+                            <option>Tripod</option>
+                            <option>Speaker</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="jumlah">Jumlah</label>
+
+                        <input
+                            type="number"
+                            id="jumlah"
+                            min="1"
+                            placeholder="Masukkan jumlah"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="tanggalPinjam">Tanggal Pinjam</label>
+
+                        <input
+                            type="date"
+                            id="tanggalPinjam"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="tanggalKembali">Tanggal Kembali</label>
+
+                        <input
+                            type="date"
+                            id="tanggalKembali"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group full">
+                        <label for="keperluan">Keperluan</label>
+
+                        <textarea
+                            id="keperluan"
+                            placeholder="Tuliskan keperluan peminjaman..."
+                            required
+                        ></textarea>
+                    </div>
+
+
+                    <div class="form-buttons">
+
+                        <button
+                            type="submit"
+                            class="btn-primary"
+                        >
+                            Ajukan Peminjaman
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn-reset"
+                            onclick="resetForm()"
+                        >
+                            Reset
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    const form = document.getElementById("formPeminjaman");
+
+
+    // Ambil data profil dari localStorage
+    function tampilkanDataSiswa() {
+
+        const profil = JSON.parse(
+            localStorage.getItem("profilSiswa")
+        );
+
+        if (profil) {
+
+            document.getElementById("namaSiswa").value =
+                profil.nama;
+
+            document.getElementById("kelasSiswa").value =
+                profil.kelas;
+
+            document.getElementById("namaHeader").textContent =
+                profil.nama;
+        }
+    }
+
+
+    // Submit pengajuan
+    form.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const barang =
+            document.getElementById("barang").value;
+
+        const jumlah =
+            document.getElementById("jumlah").value;
+
+        const tanggalPinjam =
+            document.getElementById("tanggalPinjam").value;
+
+        const tanggalKembali =
+            document.getElementById("tanggalKembali").value;
+
+        const keperluan =
+            document.getElementById("keperluan").value;
+
+
+        if (tanggalKembali < tanggalPinjam) {
+
+            alert(
+                "Tanggal kembali tidak boleh sebelum tanggal pinjam."
+            );
+
+            return;
+        }
+
+
+        if (jumlah < 1) {
+
+            alert("Jumlah barang minimal 1.");
+
+            return;
+        }
+
+
+        let riwayat = JSON.parse(
+            localStorage.getItem("riwayatPeminjaman")
+        ) || [];
+
+
+        const nomor =
+            String(riwayat.length + 1).padStart(3, "0");
+
+
+        const dataBaru = {
+
+            id: "PMJ" + nomor,
+
+            nama:
+                document.getElementById("namaSiswa").value,
+
+            kelas:
+                document.getElementById("kelasSiswa").value,
+
+            barang: barang,
+
+            jumlah: jumlah,
+
+            tanggalPinjam: tanggalPinjam,
+
+            tanggalKembali: tanggalKembali,
+
+            keperluan: keperluan,
+
+            status: "Menunggu"
+
+        };
+
+
+        riwayat.push(dataBaru);
+
+
+        localStorage.setItem(
+            "riwayatPeminjaman",
+            JSON.stringify(riwayat)
+        );
+
+
+        alert(
+            "Pengajuan peminjaman berhasil dikirim."
+        );
+
+
+        form.reset();
+
+
+        document.getElementById("namaSiswa").value =
+            dataBaru.nama;
+
+        document.getElementById("kelasSiswa").value =
+            dataBaru.kelas;
+
+    });
+
+
+    // Reset form
+    function resetForm() {
+
+        form.reset();
+
+
+        const profil = JSON.parse(
+            localStorage.getItem("profilSiswa")
+        );
+
+
+        if (profil) {
+
+            document.getElementById("namaSiswa").value =
+                profil.nama;
+
+            document.getElementById("kelasSiswa").value =
+                profil.kelas;
+
+        } else {
+
+            document.getElementById("namaSiswa").value =
+                "Andi Saputra";
+
+            document.getElementById("kelasSiswa").value =
+                "XII RPL 1";
+        }
+    }
+
+
+    tampilkanDataSiswa();
+
+</script>
+
+</body>
+</html>

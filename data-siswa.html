@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Siswa</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-box">
+                PB
+            </div>
+
+            <div>
+                <h2>Peminjaman</h2>
+                <span>Barang Sekolah</span>
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="dashboard.html">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+
+            <a href="barang.html">
+                <span>▤</span>
+                Data Barang
+            </a>
+
+
+            <a href="data-siswa.html" class="active">
+                <span>♙</span>
+                Data Siswa
+            </a>
+
+
+            <a href="peminjaman.html">
+                <span>⇄</span>
+                Peminjaman
+            </a>
+
+            <a href="konfirmasi.html">
+                <span>✓</span>
+                Konfirmasi
+            </a>
+
+            <a href="pengembalian.html">
+                <span>↩</span>
+                Pengembalian
+            </a>
+
+
+            <a href="laporan.html">
+                <span>▥</span>
+                Laporan
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                <span>↪</span>
+                Keluar
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================= KONTEN UTAMA ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Data Siswa</h1>
+
+                <p>
+                    Kelola data siswa yang melakukan peminjaman
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="profile-icon">
+                    A
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <small>
+                        Administrator
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= PANEL ================= -->
+
+        <section class="panel">
+
+
+            <!-- HEADER PANEL -->
+
+            <div class="panel-header">
+
+                <h2>
+                    Daftar Siswa
+                </h2>
+
+
+                <button
+                    type="button"
+                    class="btn-primary"
+                    onclick="openModal()">
+
+                    + Tambah Siswa
+
+                </button>
+
+            </div>
+
+
+
+            <!-- ================= SEARCH ================= -->
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Cari NISN atau nama siswa..."
+                    onkeyup="cariSiswa()">
+
+            </div>
+
+
+
+            <!-- ================= TABEL ================= -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>No</th>
+
+                            <th>NISN</th>
+
+                            <th>Nama Siswa</th>
+
+                            <th>Kelas</th>
+
+                            <th>Jurusan</th>
+
+                            <th>No. Telepon</th>
+
+                            <th>Aksi</th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <tbody id="tabelSiswa">
+
+
+                        <!-- DATA SISWA 1 -->
+
+                        <tr>
+
+                            <td>
+                                1
+                            </td>
+
+                            <td>
+                                101001
+                            </td>
+
+                            <td>
+                                Andi Saputra
+                            </td>
+
+                            <td>
+                                XII RPL 1
+                            </td>
+
+                            <td>
+                                Rekayasa Perangkat Lunak
+                            </td>
+
+                            <td>
+                                081234567890
+                            </td>
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="btn-edit"
+                                    onclick="editSiswa(this)">
+
+                                    Edit
+
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="btn-delete"
+                                    onclick="hapusSiswa(this)">
+
+                                    Hapus
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- DATA SISWA 2 -->
+
+                        <tr>
+
+                            <td>
+                                2
+                            </td>
+
+                            <td>
+                                101002
+                            </td>
+
+                            <td>
+                                Budi Santoso
+                            </td>
+
+                            <td>
+                                XII RPL 2
+                            </td>
+
+                            <td>
+                                Rekayasa Perangkat Lunak
+                            </td>
+
+                            <td>
+                                081234567891
+                            </td>
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="btn-edit"
+                                    onclick="editSiswa(this)">
+
+                                    Edit
+
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="btn-delete"
+                                    onclick="hapusSiswa(this)">
+
+                                    Hapus
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- DATA SISWA 3 -->
+
+                        <tr>
+
+                            <td>
+                                3
+                            </td>
+
+                            <td>
+                                101003
+                            </td>
+
+                            <td>
+                                Citra Dewi
+                            </td>
+
+                            <td>
+                                XI RPL 1
+                            </td>
+
+                            <td>
+                                Rekayasa Perangkat Lunak
+                            </td>
+
+                            <td>
+                                081234567892
+                            </td>
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="btn-edit"
+                                    onclick="editSiswa(this)">
+
+                                    Edit
+
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="btn-delete"
+                                    onclick="hapusSiswa(this)">
+
+                                    Hapus
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- MODAL TAMBAH / EDIT SISWA -->
+<!-- ================================================= -->
+
+<div
+    class="modal"
+    id="modal">
+
+
+    <div class="modal-content">
+
+
+        <!-- HEADER MODAL -->
+
+        <div class="modal-header">
+
+            <h2 id="judulModal">
+                Tambah Siswa
+            </h2>
+
+
+            <button
+                type="button"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+
+        <!-- ================= NISN ================= -->
+
+        <div class="form-group">
+
+            <label>
+                NISN
+            </label>
+
+
+            <input
+                type="text"
+                id="nisn"
+                placeholder="Contoh: 101004">
+
+        </div>
+
+
+
+        <!-- ================= NAMA ================= -->
+
+        <div class="form-group">
+
+            <label>
+                Nama Siswa
+            </label>
+
+
+            <input
+                type="text"
+                id="namaSiswa"
+                placeholder="Nama lengkap siswa">
+
+        </div>
+
+
+
+        <!-- ================= KELAS ================= -->
+
+        <div class="form-group">
+
+            <label>
+                Kelas
+            </label>
+
+
+            <input
+                type="text"
+                id="kelasSiswa"
+                placeholder="Contoh: XII RPL 2">
+
+        </div>
+
+
+
+        <!-- ================= JURUSAN ================= -->
+
+        <div class="form-group">
+
+            <label>
+                Jurusan
+            </label>
+
+
+            <input
+                type="text"
+                id="jurusanSiswa"
+                placeholder="Contoh: Rekayasa Perangkat Lunak">
+
+        </div>
+
+
+
+        <!-- ================= TELEPON ================= -->
+
+        <div class="form-group">
+
+            <label>
+                No. Telepon
+            </label>
+
+
+            <input
+                type="text"
+                id="teleponSiswa"
+                placeholder="Contoh: 081234567893">
+
+        </div>
+
+
+
+        <!-- ================= BUTTON ================= -->
+
+        <button
+            type="button"
+            class="btn-primary"
+            onclick="simpanSiswa()">
+
+            Simpan
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+
+<script>
+
+
+/* ==========================================
+   VARIABEL EDIT
+========================================== */
+
+let barisEdit = null;
+
+
+
+/* ==========================================
+   BUKA MODAL TAMBAH
+========================================== */
+
+function openModal() {
+
+    document.getElementById("judulModal").textContent =
+        "Tambah Siswa";
+
+
+    barisEdit = null;
+
+
+    kosongkanForm();
+
+
+    document.getElementById("modal").style.display =
+        "flex";
+
+}
+
+
+
+/* ==========================================
+   TUTUP MODAL
+========================================== */
+
+function closeModal() {
+
+    document.getElementById("modal").style.display =
+        "none";
+
+}
+
+
+
+/* ==========================================
+   KOSONGKAN FORM
+========================================== */
+
+function kosongkanForm() {
+
+    document.getElementById("nisn").value =
+        "";
+
+    document.getElementById("namaSiswa").value =
+        "";
+
+    document.getElementById("kelasSiswa").value =
+        "";
+
+    document.getElementById("jurusanSiswa").value =
+        "";
+
+    document.getElementById("teleponSiswa").value =
+        "";
+
+}
+
+
+
+/* ==========================================
+   SIMPAN SISWA
+========================================== */
+
+function simpanSiswa() {
+
+
+    const nisn =
+        document.getElementById("nisn").value.trim();
+
+
+    const nama =
+        document.getElementById("namaSiswa").value.trim();
+
+
+    const kelas =
+        document.getElementById("kelasSiswa").value.trim();
+
+
+    const jurusan =
+        document.getElementById("jurusanSiswa").value.trim();
+
+
+    const telepon =
+        document.getElementById("teleponSiswa").value.trim();
+
+
+
+    /* ==========================================
+       VALIDASI
+    ========================================== */
+
+    if (
+        nisn === "" ||
+        nama === "" ||
+        kelas === "" ||
+        jurusan === "" ||
+        telepon === ""
+    ) {
+
+        alert(
+            "Silakan lengkapi semua data siswa!"
+        );
+
+        return;
+
+    }
+
+
+
+    /* ==========================================
+       MODE EDIT
+    ========================================== */
+
+    if (barisEdit !== null) {
+
+
+        barisEdit.cells[1].textContent =
+            nisn;
+
+
+        barisEdit.cells[2].textContent =
+            nama;
+
+
+        barisEdit.cells[3].textContent =
+            kelas;
+
+
+        barisEdit.cells[4].textContent =
+            jurusan;
+
+
+        barisEdit.cells[5].textContent =
+            telepon;
+
+
+        alert(
+            "Data siswa berhasil diperbarui!"
+        );
+
+    }
+
+
+
+    /* ==========================================
+       MODE TAMBAH
+    ========================================== */
+
+    else {
+
+
+        const tabel =
+            document.getElementById("tabelSiswa");
+
+
+        const baris =
+            document.createElement("tr");
+
+
+        const nomor =
+            tabel.querySelectorAll("tr").length + 1;
+
+
+
+        baris.innerHTML = `
+
+            <td>
+                ${nomor}
+            </td>
+
+            <td>
+                ${nisn}
+            </td>
+
+            <td>
+                ${nama}
+            </td>
+
+            <td>
+                ${kelas}
+            </td>
+
+            <td>
+                ${jurusan}
+            </td>
+
+            <td>
+                ${telepon}
+            </td>
+
+            <td>
+
+                <button
+                    type="button"
+                    class="btn-edit"
+                    onclick="editSiswa(this)">
+
+                    Edit
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-delete"
+                    onclick="hapusSiswa(this)">
+
+                    Hapus
+
+                </button>
+
+            </td>
+
+        `;
+
+
+        tabel.appendChild(baris);
+
+
+        alert(
+            "Data siswa berhasil ditambahkan!"
+        );
+
+    }
+
+
+
+    /* ==========================================
+       SELESAI
+    ========================================== */
+
+    kosongkanForm();
+
+    closeModal();
+
+    perbaruiNomor();
+
+}
+
+
+
+/* ==========================================
+   EDIT SISWA
+========================================== */
+
+function editSiswa(button) {
+
+
+    const baris =
+        button.closest("tr");
+
+
+    document.getElementById("nisn").value =
+        baris.cells[1].textContent;
+
+
+    document.getElementById("namaSiswa").value =
+        baris.cells[2].textContent;
+
+
+    document.getElementById("kelasSiswa").value =
+        baris.cells[3].textContent;
+
+
+    document.getElementById("jurusanSiswa").value =
+        baris.cells[4].textContent;
+
+
+    document.getElementById("teleponSiswa").value =
+        baris.cells[5].textContent;
+
+
+
+    barisEdit =
+        baris;
+
+
+
+    document.getElementById("judulModal").textContent =
+        "Edit Siswa";
+
+
+
+    document.getElementById("modal").style.display =
+        "flex";
+
+}
+
+
+
+/* ==========================================
+   HAPUS SISWA
+========================================== */
+
+function hapusSiswa(button) {
+
+
+    const yakin =
+        confirm(
+            "Apakah Anda yakin ingin menghapus data siswa ini?"
+        );
+
+
+    if (yakin) {
+
+
+        button.closest("tr").remove();
+
+
+        perbaruiNomor();
+
+
+        alert(
+            "Data siswa berhasil dihapus!"
+        );
+
+    }
+
+}
+
+
+
+/* ==========================================
+   PERBARUI NOMOR
+========================================== */
+
+function perbaruiNomor() {
+
+
+    const baris =
+        document.querySelectorAll(
+            "#tabelSiswa tr"
+        );
+
+
+    baris.forEach(
+        function(row, index) {
+
+            row.cells[0].textContent =
+                index + 1;
+
+        }
+    );
+
+}
+
+
+
+/* ==========================================
+   PENCARIAN SISWA
+========================================== */
+
+function cariSiswa() {
+
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        ).value.toLowerCase();
+
+
+
+    const baris =
+        document.querySelectorAll(
+            "#tabelSiswa tr"
+        );
+
+
+
+    baris.forEach(
+        function(row) {
+
+
+            const isi =
+                row.textContent.toLowerCase();
+
+
+
+            if (
+                isi.includes(input)
+            ) {
+
+                row.style.display =
+                    "";
+
+            }
+
+            else {
+
+                row.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/* ==========================================
+   KLIK DI LUAR MODAL
+========================================== */
+
+window.onclick =
+    function(event) {
+
+
+        const modal =
+            document.getElementById("modal");
+
+
+        if (
+            event.target === modal
+        ) {
+
+            closeModal();
+
+        }
+
+    };
+
+
+</script>
+
+
+</body>
+</html>

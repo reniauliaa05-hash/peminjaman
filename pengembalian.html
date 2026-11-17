@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pengembalian</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ==============================
+           MODAL PENGEMBALIAN
+        ============================== */
+
+        #modal .modal-content {
+            width: 380px;
+            max-width: 90%;
+            padding: 14px;
+            border-radius: 9px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        #modal .modal-header {
+            margin-bottom: 9px;
+        }
+
+        #modal .modal-header h2 {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        #modal .modal-header button {
+            font-size: 20px;
+            padding: 0 4px;
+        }
+
+        /* FORM 2 KOLOM */
+
+        #modal .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px 9px;
+        }
+
+        #modal .form-group {
+            margin: 0;
+            min-width: 0;
+        }
+
+        #modal .form-group label {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        #modal .form-group input,
+        #modal .form-group select {
+            width: 100%;
+            height: 29px;
+            padding: 4px 7px;
+            font-size: 10px;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* STATUS FULL WIDTH */
+
+        #modal .status-group {
+            grid-column: 1 / -1;
+        }
+
+        /* BUTTON SIMPAN */
+
+        #modal .btn-simpan {
+            grid-column: 1 / -1;
+            width: 100%;
+            height: 30px;
+            padding: 5px;
+            margin-top: 2px;
+            font-size: 10px;
+            border-radius: 5px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 500px) {
+
+            #modal .modal-content {
+                width: 350px;
+                max-width: 94%;
+                padding: 12px;
+            }
+
+            #modal .form-grid {
+                gap: 6px 7px;
+            }
+
+            #modal .form-group label {
+                font-size: 9px;
+            }
+
+            #modal .form-group input,
+            #modal .form-group select {
+                height: 27px;
+                font-size: 9px;
+                padding: 3px 6px;
+            }
+
+            #modal .btn-simpan {
+                height: 28px;
+                font-size: 9px;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="layout">
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-box">
+                PB
+            </div>
+
+            <div>
+                <h2>Peminjaman</h2>
+                <span>Barang Sekolah</span>
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="dashboard.html">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+            <a href="barang.html">
+                <span>▤</span>
+                Data Barang
+            </a>
+
+            <a href="data-siswa.html">
+                <span>♙</span>
+                Data Siswa
+            </a>
+
+            <a href="peminjaman.html">
+                <span>⇄</span>
+                Peminjaman
+            </a>
+
+            <a href="konfirmasi.html">
+                <span>✓</span>
+                Konfirmasi
+            </a>
+
+            <a href="pengembalian.html" class="active">
+                <span>↩</span>
+                Pengembalian
+            </a>
+
+            <a href="laporan.html">
+                <span>▥</span>
+                Laporan
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                <span>↪</span>
+                Keluar
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= KONTEN UTAMA ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Pengembalian Barang
+                </h1>
+
+                <p>
+                    Mencatat transaksi pengembalian barang
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="profile-icon">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <small>
+                        Administrator
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= PANEL ================= -->
+
+        <section class="panel">
+
+
+            <div class="panel-header">
+
+                <h2>
+                    Data Pengembalian
+                </h2>
+
+                <button
+                    type="button"
+                    class="btn-primary"
+                    onclick="openModal()">
+
+                    + Tambah Pengembalian
+
+                </button>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Cari ID transaksi, siswa, atau barang..."
+                    onkeyup="cariPengembalian()">
+
+            </div>
+
+
+            <!-- ================= TABEL ================= -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>No</th>
+                            <th>ID Transaksi</th>
+                            <th>Siswa</th>
+                            <th>Barang</th>
+                            <th>Jumlah</th>
+                            <th>Tanggal Pinjam</th>
+                            <th>Tanggal Kembali</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tabelPengembalian">
+
+
+                        <!-- DATA 1 -->
+
+                        <tr>
+
+                            <td>1</td>
+
+                            <td>PMJ001</td>
+
+                            <td>Andi Saputra</td>
+
+                            <td>Laptop</td>
+
+                            <td>1</td>
+
+                            <td>22/09/2026</td>
+
+                            <td>22/09/2026</td>
+
+                            <td>
+
+                                <span class="badge dikembalikan">
+                                    Dikembalikan
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="btn-edit"
+                                    onclick="editPengembalian(this)">
+
+                                    Edit
+
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn-delete"
+                                    onclick="hapusPengembalian(this)">
+
+                                    Hapus
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- DATA 2 -->
+
+                        <tr>
+
+                            <td>2</td>
+
+                            <td>PMJ002</td>
+
+                            <td>Budi Santoso</td>
+
+                            <td>Proyektor</td>
+
+                            <td>1</td>
+
+                            <td>21/09/2026</td>
+
+                            <td>22/09/2026</td>
+
+                            <td>
+
+                                <span class="badge dikembalikan">
+                                    Dikembalikan
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="btn-edit"
+                                    onclick="editPengembalian(this)">
+
+                                    Edit
+
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn-delete"
+                                    onclick="hapusPengembalian(this)">
+
+                                    Hapus
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- MODAL TAMBAH PENGEMBALIAN -->
+<!-- ================================================= -->
+
+<div
+    class="modal"
+    id="modal">
+
+
+    <div class="modal-content">
+
+
+        <!-- HEADER -->
+
+        <div class="modal-header">
+
+            <h2 id="judulModal">
+                Tambah Pengembalian
+            </h2>
+
+            <button
+                type="button"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- ================= FORM ================= -->
+
+        <div class="form-grid">
+
+
+            <!-- ID TRANSAKSI -->
+
+            <div class="form-group">
+
+                <label for="idTransaksi">
+                    ID Transaksi
+                </label>
+
+                <input
+                    type="text"
+                    id="idTransaksi"
+                    placeholder="PMJ003">
+
+            </div>
+
+
+            <!-- NAMA SISWA -->
+
+            <div class="form-group">
+
+                <label for="namaSiswa">
+                    Nama Siswa
+                </label>
+
+                <input
+                    type="text"
+                    id="namaSiswa"
+                    placeholder="Nama siswa">
+
+            </div>
+
+
+            <!-- NAMA BARANG -->
+
+            <div class="form-group">
+
+                <label for="namaBarang">
+                    Nama Barang
+                </label>
+
+                <input
+                    type="text"
+                    id="namaBarang"
+                    placeholder="Nama barang">
+
+            </div>
+
+
+            <!-- JUMLAH -->
+
+            <div class="form-group">
+
+                <label for="jumlah">
+                    Jumlah
+                </label>
+
+                <input
+                    type="number"
+                    id="jumlah"
+                    placeholder="Jumlah"
+                    min="1">
+
+            </div>
+
+
+            <!-- TANGGAL PINJAM -->
+
+            <div class="form-group">
+
+                <label for="tanggalPinjam">
+                    Tanggal Pinjam
+                </label>
+
+                <input
+                    type="date"
+                    id="tanggalPinjam">
+
+            </div>
+
+
+            <!-- TANGGAL KEMBALI -->
+
+            <div class="form-group">
+
+                <label for="tanggalKembali">
+                    Tanggal Kembali
+                </label>
+
+                <input
+                    type="date"
+                    id="tanggalKembali">
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="form-group status-group">
+
+                <label for="statusPengembalian">
+                    Status
+                </label>
+
+                <select id="statusPengembalian">
+
+                    <option value="Dikembalikan">
+                        Dikembalikan
+                    </option>
+
+                    <option value="Terlambat">
+                        Terlambat
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- TOMBOL -->
+
+            <button
+                type="button"
+                class="btn-primary btn-simpan"
+                onclick="simpanPengembalian()">
+
+                Simpan
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+
+<script>
+
+
+let barisEdit = null;
+
+
+/* ==============================
+   BUKA MODAL
+============================== */
+
+function openModal() {
+
+    document.getElementById("judulModal").textContent =
+        "Tambah Pengembalian";
+
+    barisEdit = null;
+
+    kosongkanForm();
+
+    document.getElementById("modal").style.display =
+        "flex";
+
+}
+
+
+/* ==============================
+   TUTUP MODAL
+============================== */
+
+function closeModal() {
+
+    document.getElementById("modal").style.display =
+        "none";
+
+}
+
+
+/* ==============================
+   KOSONGKAN FORM
+============================== */
+
+function kosongkanForm() {
+
+    document.getElementById("idTransaksi").value = "";
+
+    document.getElementById("namaSiswa").value = "";
+
+    document.getElementById("namaBarang").value = "";
+
+    document.getElementById("jumlah").value = "";
+
+    document.getElementById("tanggalPinjam").value = "";
+
+    document.getElementById("tanggalKembali").value = "";
+
+    document.getElementById("statusPengembalian").value =
+        "Dikembalikan";
+
+}
+
+
+/* ==============================
+   FORMAT TANGGAL
+============================== */
+
+function formatTanggal(tanggal) {
+
+    if (!tanggal) {
+        return "";
+    }
+
+    const bagian = tanggal.split("-");
+
+    return (
+        bagian[2] +
+        "/" +
+        bagian[1] +
+        "/" +
+        bagian[0]
+    );
+
+}
+
+
+/* ==============================
+   SIMPAN DATA
+============================== */
+
+function simpanPengembalian() {
+
+
+    const idTransaksi =
+        document.getElementById("idTransaksi").value.trim();
+
+
+    const namaSiswa =
+        document.getElementById("namaSiswa").value.trim();
+
+
+    const namaBarang =
+        document.getElementById("namaBarang").value.trim();
+
+
+    const jumlah =
+        document.getElementById("jumlah").value;
+
+
+    const tanggalPinjam =
+        document.getElementById("tanggalPinjam").value;
+
+
+    const tanggalKembali =
+        document.getElementById("tanggalKembali").value;
+
+
+    const status =
+        document.getElementById("statusPengembalian").value;
+
+
+    /* VALIDASI */
+
+    if (
+        idTransaksi === "" ||
+        namaSiswa === "" ||
+        namaBarang === "" ||
+        jumlah === "" ||
+        tanggalPinjam === "" ||
+        tanggalKembali === ""
+    ) {
+
+        alert(
+            "Silakan lengkapi semua data pengembalian!"
+        );
+
+        return;
+
+    }
+
+
+    if (Number(jumlah) <= 0) {
+
+        alert(
+            "Jumlah harus lebih dari 0!"
+        );
+
+        return;
+
+    }
+
+
+    if (tanggalKembali < tanggalPinjam) {
+
+        alert(
+            "Tanggal kembali tidak boleh sebelum tanggal pinjam!"
+        );
+
+        return;
+
+    }
+
+
+    /* ==============================
+       EDIT DATA
+    ============================== */
+
+    if (barisEdit !== null) {
+
+
+        barisEdit.cells[1].textContent =
+            idTransaksi;
+
+
+        barisEdit.cells[2].textContent =
+            namaSiswa;
+
+
+        barisEdit.cells[3].textContent =
+            namaBarang;
+
+
+        barisEdit.cells[4].textContent =
+            jumlah;
+
+
+        barisEdit.cells[5].textContent =
+            formatTanggal(tanggalPinjam);
+
+
+        barisEdit.cells[6].textContent =
+            formatTanggal(tanggalKembali);
+
+
+        barisEdit.cells[7].innerHTML = `
+
+            <span class="badge ${
+                status === "Dikembalikan"
+                    ? "dikembalikan"
+                    : "terlambat"
+            }">
+
+                ${status}
+
+            </span>
+
+        `;
+
+
+        alert(
+            "Data pengembalian berhasil diperbarui!"
+        );
+
+    }
+
+
+    /* ==============================
+       TAMBAH DATA
+    ============================== */
+
+    else {
+
+
+        const tabel =
+            document.getElementById(
+                "tabelPengembalian"
+            );
+
+
+        const baris =
+            document.createElement("tr");
+
+
+        baris.innerHTML = `
+
+            <td></td>
+
+            <td>${idTransaksi}</td>
+
+            <td>${namaSiswa}</td>
+
+            <td>${namaBarang}</td>
+
+            <td>${jumlah}</td>
+
+            <td>${formatTanggal(tanggalPinjam)}</td>
+
+            <td>${formatTanggal(tanggalKembali)}</td>
+
+            <td>
+
+                <span class="badge ${
+                    status === "Dikembalikan"
+                        ? "dikembalikan"
+                        : "terlambat"
+                }">
+
+                    ${status}
+
+                </span>
+
+            </td>
+
+            <td>
+
+                <button
+                    type="button"
+                    class="btn-edit"
+                    onclick="editPengembalian(this)">
+
+                    Edit
+
+                </button>
+
+                <button
+                    type="button"
+                    class="btn-delete"
+                    onclick="hapusPengembalian(this)">
+
+                    Hapus
+
+                </button>
+
+            </td>
+
+        `;
+
+
+        tabel.appendChild(baris);
+
+
+        alert(
+            "Data pengembalian berhasil ditambahkan!"
+        );
+
+    }
+
+
+    kosongkanForm();
+
+    closeModal();
+
+    perbaruiNomor();
+
+}
+
+
+/* ==============================
+   EDIT DATA
+============================== */
+
+function editPengembalian(button) {
+
+
+    const baris =
+        button.closest("tr");
+
+
+    document.getElementById("idTransaksi").value =
+        baris.cells[1].textContent.trim();
+
+
+    document.getElementById("namaSiswa").value =
+        baris.cells[2].textContent.trim();
+
+
+    document.getElementById("namaBarang").value =
+        baris.cells[3].textContent.trim();
+
+
+    document.getElementById("jumlah").value =
+        baris.cells[4].textContent.trim();
+
+
+    document.getElementById("tanggalPinjam").value =
+        ubahTanggal(baris.cells[5].textContent.trim());
+
+
+    document.getElementById("tanggalKembali").value =
+        ubahTanggal(baris.cells[6].textContent.trim());
+
+
+    document.getElementById("statusPengembalian").value =
+        baris.cells[7].textContent.trim();
+
+
+    barisEdit = baris;
+
+
+    document.getElementById("judulModal").textContent =
+        "Edit Pengembalian";
+
+
+    document.getElementById("modal").style.display =
+        "flex";
+
+}
+
+
+/* ==============================
+   UBAH TANGGAL
+============================== */
+
+function ubahTanggal(tanggal) {
+
+    if (!tanggal) {
+        return "";
+    }
+
+    const bagian =
+        tanggal.split("/");
+
+
+    if (bagian.length !== 3) {
+        return "";
+    }
+
+
+    return (
+        bagian[2] +
+        "-" +
+        bagian[1] +
+        "-" +
+        bagian[0]
+    );
+
+}
+
+
+/* ==============================
+   HAPUS DATA
+============================== */
+
+function hapusPengembalian(button) {
+
+
+    const yakin =
+        confirm(
+            "Apakah Anda yakin ingin menghapus data ini?"
+        );
+
+
+    if (yakin) {
+
+        button.closest("tr").remove();
+
+        perbaruiNomor();
+
+        alert(
+            "Data pengembalian berhasil dihapus!"
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   NOMOR OTOMATIS
+============================== */
+
+function perbaruiNomor() {
+
+
+    const baris =
+        document.querySelectorAll(
+            "#tabelPengembalian tr"
+        );
+
+
+    baris.forEach(
+        function(row, index) {
+
+            row.cells[0].textContent =
+                index + 1;
+
+        }
+    );
+
+}
+
+
+/* ==============================
+   PENCARIAN
+============================== */
+
+function cariPengembalian() {
+
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        ).value.toLowerCase();
+
+
+    const baris =
+        document.querySelectorAll(
+            "#tabelPengembalian tr"
+        );
+
+
+    baris.forEach(
+        function(row) {
+
+
+            const isi =
+                row.textContent.toLowerCase();
+
+
+            if (isi.includes(input)) {
+
+                row.style.display = "";
+
+            } else {
+
+                row.style.display = "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==============================
+   KLIK DI LUAR MODAL
+============================== */
+
+window.onclick = function(event) {
+
+
+    const modal =
+        document.getElementById("modal");
+
+
+    if (event.target === modal) {
+
+        closeModal();
+
+    }
+
+};
+
+
+/* ==============================
+   TOMBOL ESC
+============================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+</script>
+
+
+</body>
+</html>

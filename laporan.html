@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laporan</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ==============================
+           FILTER LAPORAN
+        ============================== */
+
+        .filter {
+            display: flex;
+            align-items: end;
+            gap: 10px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .filter div {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .filter label {
+            font-size: 11px;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .filter input {
+            width: 150px;
+            height: 34px;
+            padding: 7px 9px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 11px;
+            outline: none;
+            background: white;
+        }
+
+        .filter input:focus {
+            border-color: #2563eb;
+        }
+
+        .filter .btn-primary {
+            height: 34px;
+            padding: 7px 15px;
+        }
+
+        /* INFORMASI HASIL */
+
+        .hasil-laporan {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 7px;
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        .hasil-laporan strong {
+            color: #1e293b;
+        }
+
+        /* TOMBOL PRINT */
+
+        @media print {
+
+            .sidebar,
+            .topbar,
+            .filter,
+            .panel-header button,
+            .hasil-laporan {
+                display: none !important;
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+            }
+
+            .panel {
+                border: none !important;
+                box-shadow: none !important;
+            }
+
+            .table-wrapper {
+                overflow: visible !important;
+            }
+
+            table {
+                width: 100% !important;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            .content {
+                padding: 0 !important;
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .filter {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .filter div {
+                width: 100%;
+            }
+
+            .filter input {
+                width: 100%;
+            }
+
+            .filter .btn-primary {
+                width: 100%;
+            }
+
+            .hasil-laporan {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 4px;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="layout">
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-box">
+                PB
+            </div>
+
+            <div>
+
+                <h2>Peminjaman</h2>
+
+                <span>
+                    Barang Sekolah
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="dashboard.html">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+            <a href="barang.html">
+                <span>▤</span>
+                Data Barang
+            </a>
+
+            <a href="data-siswa.html">
+                <span>♙</span>
+                Data Siswa
+            </a>
+
+            <a href="peminjaman.html">
+                <span>⇄</span>
+                Peminjaman
+            </a>
+
+            <a href="konfirmasi.html">
+                <span>✓</span>
+                Konfirmasi
+            </a>
+
+            <a href="pengembalian.html">
+                <span>↩</span>
+                Pengembalian
+            </a>
+
+            <a href="laporan.html" class="active">
+                <span>▥</span>
+                Laporan
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+
+                <span>↪</span>
+
+                Keluar
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= KONTEN UTAMA ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Laporan
+                </h1>
+
+                <p>
+                    Menampilkan laporan transaksi peminjaman
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="profile-icon">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <small>
+                        Administrator
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= PANEL ================= -->
+
+        <section class="panel">
+
+
+            <div class="panel-header">
+
+                <h2>
+                    Laporan Transaksi
+                </h2>
+
+
+                <button
+                    type="button"
+                    class="btn-primary"
+                    onclick="cetakLaporan()">
+
+                    Cetak Laporan
+
+                </button>
+
+            </div>
+
+
+            <!-- ================= FILTER ================= -->
+
+            <div class="filter">
+
+
+                <div>
+
+                    <label for="tanggalAwal">
+                        Tanggal Awal
+                    </label>
+
+                    <input
+                        type="date"
+                        id="tanggalAwal">
+
+                </div>
+
+
+                <div>
+
+                    <label for="tanggalAkhir">
+                        Tanggal Akhir
+                    </label>
+
+                    <input
+                        type="date"
+                        id="tanggalAkhir">
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn-primary"
+                    onclick="tampilkanLaporan()">
+
+                    Tampilkan
+
+                </button>
+
+            </div>
+
+
+            <!-- ================= HASIL ================= -->
+
+            <div class="hasil-laporan">
+
+                <span id="infoLaporan">
+                    Menampilkan semua transaksi
+                </span>
+
+                <strong id="jumlahData">
+                    3 Data
+                </strong>
+
+            </div>
+
+
+            <!-- ================= TABEL ================= -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>No</th>
+
+                            <th>
+                                ID Transaksi
+                            </th>
+
+                            <th>
+                                Nama Siswa
+                            </th>
+
+                            <th>
+                                Barang
+                            </th>
+
+                            <th>
+                                Tanggal Pinjam
+                            </th>
+
+                            <th>
+                                Tanggal Kembali
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tabelLaporan">
+
+
+                        <!-- DATA 1 -->
+
+                        <tr data-tanggal="2026-09-20">
+
+                            <td>1</td>
+
+                            <td>
+                                PMJ001
+                            </td>
+
+                            <td>
+                                Andi Saputra
+                            </td>
+
+                            <td>
+                                Laptop
+                            </td>
+
+                            <td>
+                                20/09/2026
+                            </td>
+
+                            <td>
+                                22/09/2026
+                            </td>
+
+                            <td>
+
+                                <span class="badge kembali">
+                                    Dikembalikan
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- DATA 2 -->
+
+                        <tr data-tanggal="2026-09-21">
+
+                            <td>2</td>
+
+                            <td>
+                                PMJ002
+                            </td>
+
+                            <td>
+                                Budi Santoso
+                            </td>
+
+                            <td>
+                                Proyektor
+                            </td>
+
+                            <td>
+                                21/09/2026
+                            </td>
+
+                            <td>
+                                -
+                            </td>
+
+                            <td>
+
+                                <span class="badge dipinjam">
+                                    Dipinjam
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- DATA 3 -->
+
+                        <tr data-tanggal="2026-09-19">
+
+                            <td>3</td>
+
+                            <td>
+                                PMJ003
+                            </td>
+
+                            <td>
+                                Citra Dewi
+                            </td>
+
+                            <td>
+                                Kamera
+                            </td>
+
+                            <td>
+                                19/09/2026
+                            </td>
+
+                            <td>
+                                21/09/2026
+                            </td>
+
+                            <td>
+
+                                <span class="badge kembali">
+                                    Dikembalikan
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+
+/* ==============================
+   TAMPILKAN LAPORAN
+============================== */
+
+function tampilkanLaporan() {
+
+
+    const tanggalAwal =
+        document.getElementById(
+            "tanggalAwal"
+        ).value;
+
+
+    const tanggalAkhir =
+        document.getElementById(
+            "tanggalAkhir"
+        ).value;
+
+
+    /* VALIDASI */
+
+    if (
+        tanggalAwal !== "" &&
+        tanggalAkhir !== "" &&
+        tanggalAwal > tanggalAkhir
+    ) {
+
+        alert(
+            "Tanggal awal tidak boleh lebih besar dari tanggal akhir!"
+        );
+
+        return;
+
+    }
+
+
+    const baris =
+        document.querySelectorAll(
+            "#tabelLaporan tr"
+        );
+
+
+    let jumlah = 0;
+
+
+    baris.forEach(
+        function(row) {
+
+
+            const tanggal =
+                row.getAttribute(
+                    "data-tanggal"
+                );
+
+
+            let tampil = true;
+
+
+            /* FILTER TANGGAL AWAL */
+
+            if (
+                tanggalAwal !== "" &&
+                tanggal < tanggalAwal
+            ) {
+
+                tampil = false;
+
+            }
+
+
+            /* FILTER TANGGAL AKHIR */
+
+            if (
+                tanggalAkhir !== "" &&
+                tanggal > tanggalAkhir
+            ) {
+
+                tampil = false;
+
+            }
+
+
+            if (tampil) {
+
+                row.style.display = "";
+
+                jumlah++;
+
+            } else {
+
+                row.style.display = "none";
+
+            }
+
+        }
+    );
+
+
+    /* UPDATE NOMOR */
+
+    let nomor = 1;
+
+
+    baris.forEach(
+        function(row) {
+
+            if (row.style.display !== "none") {
+
+                row.cells[0].textContent =
+                    nomor;
+
+                nomor++;
+
+            }
+
+        }
+    );
+
+
+    /* UPDATE JUMLAH */
+
+    document.getElementById(
+        "jumlahData"
+    ).textContent =
+        jumlah + " Data";
+
+
+    /* UPDATE INFORMASI */
+
+    let teks = "Menampilkan semua transaksi";
+
+
+    if (
+        tanggalAwal !== "" &&
+        tanggalAkhir !== ""
+    ) {
+
+        teks =
+            "Periode " +
+            formatTanggal(tanggalAwal) +
+            " - " +
+            formatTanggal(tanggalAkhir);
+
+    }
+
+    else if (tanggalAwal !== "") {
+
+        teks =
+            "Mulai tanggal " +
+            formatTanggal(tanggalAwal);
+
+    }
+
+    else if (tanggalAkhir !== "") {
+
+        teks =
+            "Sampai tanggal " +
+            formatTanggal(tanggalAkhir);
+
+    }
+
+
+    document.getElementById(
+        "infoLaporan"
+    ).textContent =
+        teks;
+
+
+    if (jumlah === 0) {
+
+        alert(
+            "Tidak ada transaksi pada periode tersebut."
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   RESET LAPORAN
+============================== */
+
+function resetLaporan() {
+
+
+    document.getElementById(
+        "tanggalAwal"
+    ).value = "";
+
+
+    document.getElementById(
+        "tanggalAkhir"
+    ).value = "";
+
+
+    const baris =
+        document.querySelectorAll(
+            "#tabelLaporan tr"
+        );
+
+
+    baris.forEach(
+        function(row, index) {
+
+            row.style.display = "";
+
+            row.cells[0].textContent =
+                index + 1;
+
+        }
+    );
+
+
+    document.getElementById(
+        "jumlahData"
+    ).textContent =
+        baris.length + " Data";
+
+
+    document.getElementById(
+        "infoLaporan"
+    ).textContent =
+        "Menampilkan semua transaksi";
+
+}
+
+
+/* ==============================
+   FORMAT TANGGAL
+============================== */
+
+function formatTanggal(tanggal) {
+
+
+    if (!tanggal) {
+        return "";
+    }
+
+
+    const bagian =
+        tanggal.split("-");
+
+
+    return (
+        bagian[2] +
+        "/" +
+        bagian[1] +
+        "/" +
+        bagian[0]
+    );
+
+}
+
+
+/* ==============================
+   CETAK LAPORAN
+============================== */
+
+function cetakLaporan() {
+
+
+    const jumlah =
+        document.querySelectorAll(
+            "#tabelLaporan tr:not([style*='display: none'])"
+        ).length;
+
+
+    if (jumlah === 0) {
+
+        alert(
+            "Tidak ada data yang dapat dicetak!"
+        );
+
+        return;
+
+    }
+
+
+    window.print();
+
+}
+
+
+</script>
+
+
+</body>
+</html>

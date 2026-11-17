@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Siswa</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .profile-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .profile-title {
+            margin-bottom: 18px;
+        }
+
+        .profile-title h2 {
+            margin: 0 0 5px;
+            font-size: 17px;
+        }
+
+        .profile-title p {
+            margin: 0;
+            color: #777;
+            font-size: 12px;
+        }
+
+        .profile-content {
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+        }
+
+        .profile-photo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #eaf2ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 20px;
+        }
+
+        .info-item {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 9px;
+        }
+
+        .info-item span {
+            display: block;
+            color: #777;
+            font-size: 10px;
+            margin-bottom: 4px;
+        }
+
+        .info-item strong {
+            font-size: 12px;
+        }
+
+        .profile-button {
+            margin-top: 18px;
+        }
+
+        .profile-button button {
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        /* FORM EDIT */
+        .edit-profile {
+            display: none;
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid #eee;
+        }
+
+        .edit-profile h3 {
+            margin: 0 0 15px;
+            font-size: 15px;
+        }
+
+        .edit-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 15px;
+        }
+
+        .edit-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .edit-group label {
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .edit-group input {
+            height: 32px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 5px 8px;
+            font-size: 10px;
+            outline: none;
+        }
+
+        .edit-group input:focus {
+            border-color: #2563eb;
+        }
+
+        .edit-buttons {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .edit-buttons button {
+            border: none;
+            border-radius: 6px;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        .btn-batal {
+            background: #e5e7eb;
+            color: #333;
+        }
+
+        @media (max-width: 650px) {
+
+            .profile-content {
+                flex-direction: column;
+            }
+
+            .info-grid,
+            .edit-grid {
+                grid-template-columns: 1fr;
+                width: 100%;
+            }
+
+            .edit-buttons {
+                grid-column: auto;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-box">PB</div>
+
+            <div>
+                <h2>Peminjaman</h2>
+                <span>Barang Sekolah</span>
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="siswa.html">
+                <span>▣</span>Dashboard
+            </a>
+
+            <a href="ajukan-peminjaman.html">
+                <span>⇄</span>Ajukan Peminjaman
+            </a>
+
+            <a href="riwayat-peminjaman.html">
+                <span>▤</span>Riwayat Peminjaman
+            </a>
+
+            <a href="profil-siswa.html" class="active">
+                <span>♙</span>Profil
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                <span>↪</span>Keluar
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Profil Siswa</h1>
+                <p>Informasi data diri siswa</p>
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="profile-icon" id="headerIcon">
+                    A
+                </div>
+
+                <div>
+
+                    <strong id="headerNama">
+                        Andi Saputra
+                    </strong>
+
+                    <small>Siswa</small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="profile-card">
+
+            <div class="profile-title">
+
+                <h2>Data Profil Saya</h2>
+
+                <p>
+                    Berikut adalah informasi data diri yang
+                    terdaftar pada sistem.
+                </p>
+
+            </div>
+
+
+            <div class="profile-content">
+
+                <div
+                    class="profile-photo"
+                    id="profileIcon"
+                >
+                    A
+                </div>
+
+
+                <div class="profile-info">
+
+                    <div class="info-grid">
+
+                        <div class="info-item">
+                            <span>Nama Lengkap</span>
+                            <strong id="tampilNama">
+                                Andi Saputra
+                            </strong>
+                        </div>
+
+
+                        <div class="info-item">
+                            <span>NIS</span>
+                            <strong id="tampilNis">
+                                2026001
+                            </strong>
+                        </div>
+
+
+                        <div class="info-item">
+                            <span>Kelas</span>
+                            <strong id="tampilKelas">
+                                XII RPL 1
+                            </strong>
+                        </div>
+
+
+                        <div class="info-item">
+                            <span>Jurusan</span>
+                            <strong id="tampilJurusan">
+                                Rekayasa Perangkat Lunak
+                            </strong>
+                        </div>
+
+
+                        <div class="info-item">
+                            <span>Jenis Kelamin</span>
+                            <strong id="tampilGender">
+                                Laki-laki
+                            </strong>
+                        </div>
+
+
+                        <div class="info-item">
+                            <span>No. Telepon</span>
+                            <strong id="tampilTelepon">
+                                081234567890
+                            </strong>
+                        </div>
+
+
+                        <div class="info-item">
+                            <span>Email</span>
+                            <strong id="tampilEmail">
+                                andi@gmail.com
+                            </strong>
+                        </div>
+
+
+                        <div class="info-item">
+                            <span>Status</span>
+                            <strong>
+                                Aktif
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-button">
+
+                        <button
+                            type="button"
+                            class="btn-primary"
+                            onclick="bukaEdit()"
+                        >
+                            Ubah Profil
+                        </button>
+
+                    </div>
+
+
+                    <!-- FORM EDIT -->
+
+                    <div
+                        class="edit-profile"
+                        id="editProfile"
+                    >
+
+                        <h3>Ubah Data Profil</h3>
+
+
+                        <form id="formProfil">
+
+                            <div class="edit-grid">
+
+                                <div class="edit-group">
+
+                                    <label>Nama Lengkap</label>
+
+                                    <input
+                                        type="text"
+                                        id="editNama"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="edit-group">
+
+                                    <label>NIS</label>
+
+                                    <input
+                                        type="text"
+                                        id="editNis"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="edit-group">
+
+                                    <label>Kelas</label>
+
+                                    <input
+                                        type="text"
+                                        id="editKelas"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="edit-group">
+
+                                    <label>Jurusan</label>
+
+                                    <input
+                                        type="text"
+                                        id="editJurusan"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="edit-group">
+
+                                    <label>Jenis Kelamin</label>
+
+                                    <input
+                                        type="text"
+                                        id="editGender"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="edit-group">
+
+                                    <label>No. Telepon</label>
+
+                                    <input
+                                        type="text"
+                                        id="editTelepon"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="edit-group">
+
+                                    <label>Email</label>
+
+                                    <input
+                                        type="email"
+                                        id="editEmail"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="edit-buttons">
+
+                                    <button
+                                        type="submit"
+                                        class="btn-primary"
+                                    >
+                                        Simpan Perubahan
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="btn-batal"
+                                        onclick="tutupEdit()"
+                                    >
+                                        Batal
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    const dataDefault = {
+
+        nama: "Andi Saputra",
+
+        nis: "2026001",
+
+        kelas: "XII RPL 1",
+
+        jurusan: "Rekayasa Perangkat Lunak",
+
+        gender: "Laki-laki",
+
+        telepon: "081234567890",
+
+        email: "andi@gmail.com"
+
+    };
+
+
+    function ambilProfil() {
+
+        const data =
+            localStorage.getItem("profilSiswa");
+
+
+        if (data) {
+
+            return JSON.parse(data);
+
+        }
+
+
+        localStorage.setItem(
+            "profilSiswa",
+            JSON.stringify(dataDefault)
+        );
+
+
+        return dataDefault;
+
+    }
+
+
+    function tampilkanProfil() {
+
+        const data = ambilProfil();
+
+
+        document.getElementById("tampilNama")
+            .textContent = data.nama;
+
+        document.getElementById("tampilNis")
+            .textContent = data.nis;
+
+        document.getElementById("tampilKelas")
+            .textContent = data.kelas;
+
+        document.getElementById("tampilJurusan")
+            .textContent = data.jurusan;
+
+        document.getElementById("tampilGender")
+            .textContent = data.gender;
+
+        document.getElementById("tampilTelepon")
+            .textContent = data.telepon;
+
+        document.getElementById("tampilEmail")
+            .textContent = data.email;
+
+
+        document.getElementById("headerNama")
+            .textContent = data.nama;
+
+
+        const huruf =
+            data.nama.charAt(0).toUpperCase();
+
+
+        document.getElementById("profileIcon")
+            .textContent = huruf;
+
+        document.getElementById("headerIcon")
+            .textContent = huruf;
+
+    }
+
+
+    function bukaEdit() {
+
+        const data = ambilProfil();
+
+
+        document.getElementById("editNama").value =
+            data.nama;
+
+        document.getElementById("editNis").value =
+            data.nis;
+
+        document.getElementById("editKelas").value =
+            data.kelas;
+
+        document.getElementById("editJurusan").value =
+            data.jurusan;
+
+        document.getElementById("editGender").value =
+            data.gender;
+
+        document.getElementById("editTelepon").value =
+            data.telepon;
+
+        document.getElementById("editEmail").value =
+            data.email;
+
+
+        document.getElementById("editProfile")
+            .style.display = "block";
+
+    }
+
+
+    function tutupEdit() {
+
+        document.getElementById("editProfile")
+            .style.display = "none";
+
+    }
+
+
+    document.getElementById("formProfil")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            const data = {
+
+                nama:
+                    document.getElementById("editNama").value,
+
+                nis:
+                    document.getElementById("editNis").value,
+
+                kelas:
+                    document.getElementById("editKelas").value,
+
+                jurusan:
+                    document.getElementById("editJurusan").value,
+
+                gender:
+                    document.getElementById("editGender").value,
+
+                telepon:
+                    document.getElementById("editTelepon").value,
+
+                email:
+                    document.getElementById("editEmail").value
+
+            };
+
+
+            localStorage.setItem(
+                "profilSiswa",
+                JSON.stringify(data)
+            );
+
+
+            tampilkanProfil();
+
+
+            tutupEdit();
+
+
+            alert(
+                "Profil berhasil diperbarui."
+            );
+
+        });
+
+
+    tampilkanProfil();
+
+</script>
+
+</body>
+</html>

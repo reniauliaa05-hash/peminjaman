@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Data Pengguna</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="sidebar-logo">PB</div>
+
+            <div>
+                <h2>Peminjaman</h2>
+                <span>Barang</span>
+            </div>
+
+        </div>
+
+
+        <div class="user-info">
+
+            <div class="user-avatar">A</div>
+
+            <div>
+                <strong>Admin</strong>
+                <small>Administrator</small>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <a href="dashboard.html">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="barang.html">
+                <span>▤</span>
+                Data Barang
+            </a>
+
+            <a href="data-siswa.html">
+                <span>♙</span>
+                Data Siswa
+            </a>
+
+            <a href="peminjaman.html">
+                <span>▣</span>
+                Peminjaman
+            </a>
+
+            <a href="pengembalian.html">
+                <span>↩</span>
+                Pengembalian
+            </a>
+
+            <a href="laporan.html">
+                <span>▤</span>
+                Laporan
+            </a>
+
+            <a href="pengguna.html" class="active">
+                <span>♙</span>
+                Pengguna
+            </a>
+
+            <a href="index.html" class="logout">
+                <span>↪</span>
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <div class="topbar">
+
+            <div>
+                <h1>Data Pengguna</h1>
+                <p>Mengelola pengguna sistem</p>
+            </div>
+
+            <div class="topbar-user">
+                Admin
+            </div>
+
+        </div>
+
+
+        <div class="content-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h2>Daftar Pengguna</h2>
+                    <p>Data pengguna sistem peminjaman barang</p>
+                </div>
+
+                <button
+                    class="btn-primary"
+                    onclick="tambahPengguna()">
+                    + Tambah Pengguna
+                </button>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Username</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>1</td>
+                            <td>Administrator</td>
+                            <td>admin</td>
+                            <td>Admin</td>
+                            <td>
+                                <span class="status status-kembali">
+                                    Aktif
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn-small">
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Andi Saputra</td>
+                            <td>siswa</td>
+                            <td>Siswa</td>
+                            <td>
+                                <span class="status status-kembali">
+                                    Aktif
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn-small">
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>Petugas Laboratorium</td>
+                            <td>petugas</td>
+                            <td>Petugas Lab</td>
+                            <td>
+                                <span class="status status-kembali">
+                                    Aktif
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn-small">
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>4</td>
+                            <td>Kepala Laboratorium</td>
+                            <td>kepala</td>
+                            <td>Kepala Lab</td>
+                            <td>
+                                <span class="status status-kembali">
+                                    Aktif
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn-small">
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+function tambahPengguna() {
+
+    alert("Form tambah pengguna akan dibuka.");
+
+}
+
+</script>
+
+</body>
+</html>

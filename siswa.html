@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siswa - Peminjaman Barang</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .welcome-card {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .welcome-card h2 {
+            margin: 0 0 6px;
+            font-size: 20px;
+        }
+
+        .welcome-card p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .menu-siswa {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .menu-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            text-decoration: none;
+            color: #222;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: 0.2s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #eaf2ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .menu-card h3 {
+            margin: 0 0 5px;
+            font-size: 15px;
+        }
+
+        .menu-card p {
+            margin: 0;
+            color: #777;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .panel-siswa {
+            background: #fff;
+            border-radius: 10px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .panel-siswa h2 {
+            margin: 0 0 15px;
+            font-size: 16px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .info-item {
+            background: #f8fafc;
+            border-radius: 7px;
+            padding: 12px;
+        }
+
+        .info-item span {
+            display: block;
+            font-size: 10px;
+            color: #777;
+            margin-bottom: 4px;
+        }
+
+        .info-item strong {
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+            .menu-siswa {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-box">PB</div>
+            <div>
+                <h2>Peminjaman</h2>
+                <span>Barang Sekolah</span>
+            </div>
+        </div>
+
+        <nav>
+            <a href="siswa.html" class="active">
+                <span>▣</span>Dashboard
+            </a>
+
+            <a href="ajukan-peminjaman.html">
+                <span>⇄</span>Ajukan Peminjaman
+            </a>
+
+            <a href="riwayat-peminjaman.html">
+                <span>▤</span>Riwayat Peminjaman
+            </a>
+
+            <a href="profil-siswa.html">
+                <span>♙</span>Profil
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="index.html">
+                <span>↪</span>Keluar
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h1>Dashboard Siswa</h1>
+                <p>Halaman siswa untuk melakukan peminjaman barang</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="profile-icon">S</div>
+
+                <div>
+                    <strong>Andi Saputra</strong>
+                    <small>Siswa</small>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- WELCOME -->
+        <div class="welcome-card">
+            <h2>Selamat Datang, Andi Saputra</h2>
+            <p>
+                Silakan gunakan menu di bawah untuk mengajukan dan melihat
+                riwayat peminjaman barang.
+            </p>
+        </div>
+
+
+        <!-- MENU SISWA -->
+        <div class="menu-siswa">
+
+            <a href="ajukan-peminjaman.html" class="menu-card">
+
+                <div class="menu-icon">⇄</div>
+
+                <h3>Ajukan Peminjaman</h3>
+
+                <p>
+                    Ajukan permintaan peminjaman barang sekolah.
+                </p>
+
+            </a>
+
+
+            <a href="riwayat-peminjaman.html" class="menu-card">
+
+                <div class="menu-icon">▤</div>
+
+                <h3>Riwayat Peminjaman</h3>
+
+                <p>
+                    Melihat daftar barang yang pernah dipinjam.
+                </p>
+
+            </a>
+
+
+            <a href="profil-siswa.html" class="menu-card">
+
+                <div class="menu-icon">♙</div>
+
+                <h3>Profil Saya</h3>
+
+                <p>
+                    Melihat informasi data diri siswa.
+                </p>
+
+            </a>
+
+        </div>
+
+
+        <!-- INFORMASI SISWA -->
+        <section class="panel-siswa">
+
+            <h2>Informasi Siswa</h2>
+
+            <div class="info-grid">
+
+                <div class="info-item">
+                    <span>Nama Siswa</span>
+                    <strong>Andi Saputra</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>NIS</span>
+                    <strong>2026001</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Kelas</span>
+                    <strong>XII RPL 1</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Jurusan</span>
+                    <strong>Rekayasa Perangkat Lunak</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

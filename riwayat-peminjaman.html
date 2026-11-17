@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Peminjaman</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .history-panel {
+            background: #fff;
+            border-radius: 10px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .history-header h2 {
+            margin: 0;
+            font-size: 17px;
+        }
+
+        .search-history input {
+            width: 220px;
+            height: 32px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 5px 9px;
+            box-sizing: border-box;
+            font-size: 11px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            font-size: 10px;
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 7px;
+            border-radius: 5px;
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .menunggu {
+            background: #fff4d6;
+            color: #a66b00;
+        }
+
+        .disetujui {
+            background: #e2f7e8;
+            color: #218838;
+        }
+
+        .ditolak {
+            background: #fde4e4;
+            color: #c62828;
+        }
+
+        .dipinjam {
+            background: #e4efff;
+            color: #2563eb;
+        }
+
+        .kembali {
+            background: #e2f7e8;
+            color: #218838;
+        }
+
+        .btn-hapus {
+            border: none;
+            background: #ef4444;
+            color: white;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 9px;
+            cursor: pointer;
+        }
+
+        .btn-detail {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 9px;
+            cursor: pointer;
+        }
+
+        .kosong {
+            text-align: center;
+            color: #888;
+            padding: 25px;
+        }
+
+        @media (max-width: 600px) {
+
+            .history-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .search-history {
+                width: 100%;
+            }
+
+            .search-history input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-box">PB</div>
+
+            <div>
+                <h2>Peminjaman</h2>
+                <span>Barang Sekolah</span>
+            </div>
+        </div>
+
+
+        <nav>
+
+            <a href="siswa.html">
+                <span>▣</span>Dashboard
+            </a>
+
+            <a href="ajukan-peminjaman.html">
+                <span>⇄</span>Ajukan Peminjaman
+            </a>
+
+            <a href="riwayat-peminjaman.html" class="active">
+                <span>▤</span>Riwayat Peminjaman
+            </a>
+
+            <a href="profil-siswa.html">
+                <span>♙</span>Profil
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                <span>↪</span>Keluar
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Riwayat Peminjaman</h1>
+                <p>Melihat riwayat peminjaman barang</p>
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="profile-icon">S</div>
+
+                <div>
+                    <strong id="namaHeader">
+                        Andi Saputra
+                    </strong>
+
+                    <small>Siswa</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="history-panel">
+
+            <div class="history-header">
+
+                <h2>Riwayat Peminjaman Saya</h2>
+
+                <div class="search-history">
+
+                    <input
+                        type="text"
+                        id="searchHistory"
+                        placeholder="Cari barang atau ID..."
+                        onkeyup="cariRiwayat()"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>No</th>
+                            <th>ID Transaksi</th>
+                            <th>Barang</th>
+                            <th>Jumlah</th>
+                            <th>Tanggal Pinjam</th>
+                            <th>Tanggal Kembali</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tabelRiwayat"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function ambilRiwayat() {
+
+        return JSON.parse(
+            localStorage.getItem("riwayatPeminjaman")
+        ) || [];
+
+    }
+
+
+    function formatTanggal(tanggal) {
+
+        if (!tanggal) return "-";
+
+        const bagian = tanggal.split("-");
+
+        return (
+            bagian[2] +
+            "/" +
+            bagian[1] +
+            "/" +
+            bagian[0]
+        );
+
+    }
+
+
+    function tampilkanRiwayat() {
+
+        const tbody =
+            document.getElementById("tabelRiwayat");
+
+        let data = ambilRiwayat();
+
+
+        const profil = JSON.parse(
+            localStorage.getItem("profilSiswa")
+        );
+
+
+        if (profil) {
+
+            document.getElementById("namaHeader")
+                .textContent = profil.nama;
+
+        }
+
+
+        tbody.innerHTML = "";
+
+
+        if (data.length === 0) {
+
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="kosong">
+                        Belum ada riwayat peminjaman.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        data.forEach(function(item, index) {
+
+            let classStatus = "";
+
+
+            if (item.status === "Menunggu") {
+                classStatus = "menunggu";
+            } else if (item.status === "Disetujui") {
+                classStatus = "disetujui";
+            } else if (item.status === "Ditolak") {
+                classStatus = "ditolak";
+            } else if (item.status === "Dipinjam") {
+                classStatus = "dipinjam";
+            } else {
+                classStatus = "kembali";
+            }
+
+
+            const row = document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>${index + 1}</td>
+
+                <td>${item.id}</td>
+
+                <td>${item.barang}</td>
+
+                <td>${item.jumlah}</td>
+
+                <td>${formatTanggal(item.tanggalPinjam)}</td>
+
+                <td>${formatTanggal(item.tanggalKembali)}</td>
+
+                <td>
+                    <span class="status ${classStatus}">
+                        ${item.status}
+                    </span>
+                </td>
+
+                <td>
+
+                    <button
+                        class="btn-detail"
+                        onclick="detailRiwayat(${index})"
+                    >
+                        Detail
+                    </button>
+
+                    <button
+                        class="btn-hapus"
+                        onclick="hapusRiwayat(${index})"
+                    >
+                        Hapus
+                    </button>
+
+                </td>
+            `;
+
+
+            tbody.appendChild(row);
+
+        });
+
+    }
+
+
+    function cariRiwayat() {
+
+        const input =
+            document.getElementById("searchHistory")
+            .value
+            .toLowerCase();
+
+
+        const rows =
+            document.querySelectorAll(
+                "#tabelRiwayat tr"
+            );
+
+
+        rows.forEach(function(row) {
+
+            const text =
+                row.textContent.toLowerCase();
+
+
+            row.style.display =
+                text.includes(input)
+                    ? ""
+                    : "none";
+
+        });
+
+    }
+
+
+    function detailRiwayat(index) {
+
+        const data = ambilRiwayat();
+
+        const item = data[index];
+
+
+        if (!item) return;
+
+
+        alert(
+            "DETAIL PEMINJAMAN\n\n" +
+            "ID Transaksi : " + item.id + "\n" +
+            "Nama Siswa : " + item.nama + "\n" +
+            "Kelas : " + item.kelas + "\n" +
+            "Barang : " + item.barang + "\n" +
+            "Jumlah : " + item.jumlah + "\n" +
+            "Tanggal Pinjam : " +
+                formatTanggal(item.tanggalPinjam) + "\n" +
+            "Tanggal Kembali : " +
+                formatTanggal(item.tanggalKembali) + "\n" +
+            "Keperluan : " + item.keperluan + "\n" +
+            "Status : " + item.status
+        );
+
+    }
+
+
+    function hapusRiwayat(index) {
+
+        const data = ambilRiwayat();
+
+
+        if (!data[index]) return;
+
+
+        const yakin = confirm(
+            "Apakah Anda yakin ingin menghapus riwayat " +
+            data[index].id + "?"
+        );
+
+
+        if (!yakin) return;
+
+
+        data.splice(index, 1);
+
+
+        localStorage.setItem(
+            "riwayatPeminjaman",
+            JSON.stringify(data)
+        );
+
+
+        tampilkanRiwayat();
+
+
+        alert("Riwayat berhasil dihapus.");
+
+    }
+
+
+    tampilkanRiwayat();
+
+</script>
+
+</body>
+</html>
